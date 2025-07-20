@@ -1,0 +1,41 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/home_style.css' %}">
+
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skincare Platform - Home</title>
+    <link rel="stylesheet" href="{% static 'css/home_style.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">
+            <a href="/">🌿 Skincare</a>
+        </div>
+        <nav class="nav-links">
+            <a href="/categories/">Categories</a>
+            <a href="/quiz/">Quiz</a>
+            <a href="/login/">Login</a>
+            <a href="/register/">Register</a>
+        </nav>
+        <div class="search-bar">
+            <form action="/search/" method="get">
+                <input type="text" name="q" placeholder="Search products...">
+                <button type="submit">🔍</button>
+            </form>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h1>Welcome to Your Personalized Skincare Platform</h1>
+        <p>Find the best products and routines tailored to your skin.</p>
+        <a href="/products/" class="btn">Browse Products</a>
+    </main>
+</body>
+</html>

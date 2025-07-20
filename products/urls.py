@@ -13,13 +13,4 @@ urlpatterns = [
     path('category/Eye-Care',Eye_Care_page),
 
 
-
-
-
-    
-    
-
-
-    # path('profile/',profilepage)
-
 ]

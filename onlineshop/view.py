@@ -1,6 +1,10 @@
 from django.http import HttpResponse , request
+from django.shortcuts import render
+
+# from templates import home
+# from static import home_style
 
 
 def homepage(request) :
-    return HttpResponse()
+    return render(request, 'home.html')
     

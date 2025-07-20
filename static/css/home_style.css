@@ -1,0 +1,98 @@
+/* Reset & base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fdf6f0; /* کرم خیلی روشن */
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Navbar styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffe0e9; /* صورتی پاستلی */
+    padding: 15px 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo a {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #5c5470; /* بنفش ملایم */
+    text-decoration: none;
+}
+
+.nav-links a {
+    margin: 0 15px;
+    color: #5c5470;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #9f86c0; /* بنفش پاستلی روشن‌تر */
+}
+
+.search-bar form {
+    display: flex;
+    align-items: center;
+}
+
+.search-bar input[type="text"] {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 20px 0 0 20px;
+    outline: none;
+}
+
+.search-bar button {
+    padding: 8px 12px;
+    border: none;
+    background-color: #9f86c0; /* بنفش پاستلی */
+    color: #fff;
+    border-radius: 0 20px 20px 0;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background-color: #be95c4;
+}
+
+/* Main content styles */
+.main-content {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.main-content h1 {
+    font-size: 2.5rem;
+    color: #5c5470;
+    margin-bottom: 20px;
+}
+
+.main-content p {
+    font-size: 1.2rem;
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.btn {
+    padding: 10px 25px;
+    background-color: #9f86c0;
+    color: white;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #be95c4;
+}
