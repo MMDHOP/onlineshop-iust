@@ -5,8 +5,8 @@ from django.db import models
 
 class CustomUser(AbstractUser):
     USER_TYPE_CHOICES = (
-        ('buyer', 'خریدار'),
-        ('seller', 'فروشنده'),
+        ('buyer', 'buyer'),
+        ('seller', 'seller'),
     )
     user_type = models.CharField(
         max_length=10,

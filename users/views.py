@@ -8,7 +8,7 @@ def loginpage(request) :
 
 
 def signinpage(request) :
-    return HttpResponse('sign in here pedarsag')
+    return render(request,'sign_in.html')
     
 
 def profilepage(request) :
