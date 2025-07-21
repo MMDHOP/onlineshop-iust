@@ -4,7 +4,7 @@ from django.http import HttpResponse , request
 # Create your views here.
 
 def category_page(request):
-    return HttpResponse('sklcnkjndclk')
+    return render(request, 'category.html')
 
 def cleanser_page(request) :
     return HttpResponse('all cleansers')

@@ -1,0 +1,125 @@
+/* Reset & base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fdf6f0; /* کرم خیلی روشن */
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Navbar styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffe0e9; /* صورتی پاستلی */
+    padding: 15px 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo a {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #5c5470; /* بنفش ملایم */
+    text-decoration: none;
+}
+
+.nav-links a {
+    margin: 0 15px;
+    color: #5c5470;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #9f86c0; /* بنفش پاستلی روشن‌تر */
+}
+
+.search-bar form {
+    display: flex;
+    align-items: center;
+}
+
+.search-bar input[type="text"] {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 20px 0 0 20px;
+    outline: none;
+}
+
+.search-bar button {
+    padding: 8px 12px;
+    border: none;
+    background-color: #9f86c0; /* بنفش پاستلی */
+    color: #fff;
+    border-radius: 0 20px 20px 0;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background-color: #be95c4;
+}
+
+/* Categories page styles */
+.categories-container {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.categories-container h1 {
+    font-size: 2.2rem;
+    color: #5c5470;
+    margin-bottom: 30px;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.category-card {
+    background-color: #ffe0e9; /* صورتی پاستلی */
+    border-radius: 15px;
+    padding: 30px 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    font-size: 1.2rem;
+    color: #5c5470;
+    font-weight: 600;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    background-color: #fcdde8; /* کمی روشن‌تر موقع هاور */
+}
+
+/* Footer styles */
+.footer {
+    background-color: #ffe0e9; /* صورتی پاستلی */
+    color: #5c5470;
+    text-align: center;
+    padding: 20px 10px;
+    border-top: 1px solid #ddd;
+    margin-top: 50px;
+}
+
+.footer-links a {
+    margin: 0 10px;
+    color: #5c5470;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.footer-links a:hover {
+    color: #9f86c0;
+}
