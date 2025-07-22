@@ -35,8 +35,8 @@ class SignUpAPIView(APIView):
 
 
 # HTML page for signup
-def sign_in_page(request):
-    return render(request, 'sign_in.html')  # make sure you have templates/sign_up.html
+def sign_up_page(request):
+    return render(request, 'sign_up.html')  # make sure you have templates/sign_up.html
 
 
 # HTML page for login
