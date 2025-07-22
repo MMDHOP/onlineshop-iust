@@ -13,12 +13,18 @@
         <div class="logo">
             <a href="/home/">🌿 Skincare</a>
         </div>
-        <nav class="nav-links">
-            <a href="/category/">Categories</a>
-            <a href="/quiz/">Quiz</a>
-            <a href="/login/">Login</a>
-            <a href="/sign-in/">Register</a>
-        </nav>
+            <nav class="nav-links">
+                <a href="/category/">Categories</a>
+                <a href="/quiz/">Quiz</a>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' %}">Profile</a>
+                    <a href="{% url 'logout' %}">logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Login</a>
+                    <a href="{% url 'sign_up' %}">Register</a>
+                {% endif %}
+            </nav>
         <div class="search-bar">
             <form action="/search/" method="get">
                 <input type="text" name="q" placeholder="Search products...">

@@ -4,11 +4,10 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Skincare Platform - Home</title>
+    <title>Profile - Skincare Platform</title>
     <link rel="stylesheet" href="{% static 'css/home_style.css' %}" />
 </head>
 <body>
-    <!-- Navbar -->
     <header class="navbar">
         <div class="logo">
             <a href="/home/">🌿 Skincare</a>
@@ -16,14 +15,11 @@
         <nav class="nav-links">
             <a href="/category/">Categories</a>
             <a href="/quiz/">Quiz</a>
-
-            {% if user.is_authenticated %}
-                <a href="{% url 'profile' %}">Profile</a>
-                <a href="{% url 'logout' %}">logout</a>
-            {% else %}
-                <a href="{% url 'login' %}">Login</a>
-                <a href="{% url 'sign_up' %}">Register</a>
-            {% endif %}
+            <a href="{% url 'profile' %}" class="profile-link">
+                <img src="{% static 'images/default-avatar.png' %}" alt="Profile" />
+                {{ user.username }}
+            </a>
+            <a href="{% url 'logout' %}" class="logout-link">Logout</a>
         </nav>
         <div class="search-bar">
             <form action="/search/" method="get">
@@ -33,11 +29,18 @@
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <h1>Welcome to Your Personalized Skincare Platform</h1>
-        <p>Find the best products and routines tailored to your skin.</p>
-        <a href="/products/" class="btn">Browse Products</a>
+    <main class="main-content profile-content">
+        <h1>Welcome, {{ user.first_name }}!</h1>
+        <div class="profile-card">
+            <img src="{% static 'images/default-avatar.png' %}" alt="Profile Picture" class="profile-pic" />
+            <div class="profile-info">
+                <p><strong>Username:</strong> {{ user.username }}</p>
+                <p><strong>Full Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <p><strong>User Type:</strong> {{ user.user_type }}</p>
+            </div>
+        </div>
+        <a href="/home/" class="btn">Back to Home</a>
     </main>
 
     <footer class="footer">

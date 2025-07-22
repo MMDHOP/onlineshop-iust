@@ -4,9 +4,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializer import LoginSerializer, SignUpSerializer
+from django.contrib.auth import logout
 
 
-# API Views برای کلاینت‌هایی که JSON می‌فرستن
 class LoginAPIView(APIView):
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
@@ -25,8 +25,6 @@ class SignUpAPIView(APIView):
             return Response({"message": "User registered successfully"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-# Viewهای فرم HTML (برای مرورگر)
 def login_page(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -52,7 +50,7 @@ def sign_up_page(request):
         password = request.POST.get('password')
         password2 = request.POST.get('password2')
 
-        # ساده‌ترین اعتبارسنجی اولیه فرم
+
         errors = {}
         if password != password2:
             errors['password'] = "Passwords do not match."
@@ -62,7 +60,7 @@ def sign_up_page(request):
         if errors:
             return render(request, 'sign_up.html', {'errors': errors})
 
-        # ساختن کاربر جدید
+
         from django.contrib.auth import get_user_model
         User = get_user_model()
 
@@ -83,3 +81,14 @@ def sign_up_page(request):
         return redirect('login')
 
     return render(request, 'sign_up.html')
+
+
+def profile_page(request) :
+    return render(request,'profile.html')
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('home') 
+
+
