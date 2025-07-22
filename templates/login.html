@@ -10,7 +10,7 @@
 <body>
     <div class="auth-container">
         <h1>Login to Your Account</h1>
-        <form method="POST" action="/api/users/login/">
+        <form method="POST" action="/api/login/">
             {% csrf_token %}
             <input type="text" name="username" placeholder="Username" required>
             <input type="password" name="password" placeholder="Password" required>
