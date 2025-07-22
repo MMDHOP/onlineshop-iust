@@ -1,28 +1,20 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.contrib.auth import login, authenticate
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializer import LoginSerializer, SignUpSerializer
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.decorators import login_required
 
 
+# API Views برای کلاینت‌هایی که JSON می‌فرستن
 class LoginAPIView(APIView):
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
-            user = authenticate(
-                username=serializer.validated_data['username'],
-                password=request.data.get('password')
-            )
-            if user:
-                login(request, user)  # Django session login
-                return Response({"message": "Login successful"}, status=status.HTTP_200_OK)
-            else:
-                return Response({"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
+            user = serializer.validated_data['user']
+            login(request, user)
+            return Response({"message": "Login successful"}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 class SignUpAPIView(APIView):
@@ -34,17 +26,60 @@ class SignUpAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# HTML page for signup
-def sign_up_page(request):
-    return render(request, 'sign_up.html')  # make sure you have templates/sign_up.html
-
-
-# HTML page for login
+# Viewهای فرم HTML (برای مرورگر)
 def login_page(request):
-    return render(request, 'login.html')  # make sure you have templates/sign_in.html
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            return render(request, 'login.html', {'error': 'Invalid username or password.'})
+
+    return render(request, 'login.html')
 
 
-# Profile page (only for logged in users)
-# @login_required
-# def profile_page(request):
-#     return render(request, 'profile.html', {"user": request.user})
+def sign_up_page(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        user_type = request.POST.get('user_type')
+        password = request.POST.get('password')
+        password2 = request.POST.get('password2')
+
+        # ساده‌ترین اعتبارسنجی اولیه فرم
+        errors = {}
+        if password != password2:
+            errors['password'] = "Passwords do not match."
+        if not user_type:
+            errors['user_type'] = "User type is required."
+
+        if errors:
+            return render(request, 'sign_up.html', {'errors': errors})
+
+        # ساختن کاربر جدید
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+
+        if User.objects.filter(username=username).exists():
+            errors['username'] = "Username already exists."
+            return render(request, 'sign_up.html', {'errors': errors})
+
+        user = User.objects.create(
+            username=username,
+            email=email,
+            first_name=first_name,
+            last_name=last_name,
+            user_type=user_type,
+        )
+        user.set_password(password)
+        user.save()
+
+        return redirect('login')
+
+    return render(request, 'sign_up.html')

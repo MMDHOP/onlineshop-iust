@@ -43,11 +43,6 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("Invalid username or password.")
         if not user.is_active:
             raise serializers.ValidationError("User account is disabled.")
-        token, created = Token.objects.get_or_create(user=user)
-        return {
-            'token': token.key,
-            'user_id': user.id,
-            'username': user.username,
-            'user_type': user.user_type,
-            'email': user.email,
-        }
+        data['user'] = user  
+        return data
+

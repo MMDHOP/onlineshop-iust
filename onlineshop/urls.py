@@ -21,7 +21,7 @@ from onlineshop.view import homepage
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/',homepage),
+    path('home/',homepage, name='home'),
     path('',include('users.urls')),
     path('',include('products.urls'))
 

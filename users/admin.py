@@ -4,14 +4,14 @@ from .models import CustomUser
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
-    # نسخه کپی از fieldsets پیش‌فرض
+
     fieldsets = list(UserAdmin.fieldsets)
     fieldsets[1] = (fieldsets[1][0], {'fields': fieldsets[1][1]['fields'] + ('user_type',)})
 
     add_fieldsets = UserAdmin.add_fieldsets + (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'user_type'),  # 👈 فقط اینجا اضافه شد
+            'fields': ('email', 'user_type'),  
         }),
     )
 

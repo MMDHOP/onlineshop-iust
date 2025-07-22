@@ -10,7 +10,7 @@
 <body>
     <div class="auth-container">
         <h1>Create Account</h1>
-        <form method="POST" action="/api/signup/">
+        <form method="POST" action="{% url 'sign_up' %}">
             {% csrf_token %}
             <input type="text" name="username" placeholder="Username" required>
             <input type="email" name="email" placeholder="Email" required>
@@ -28,6 +28,14 @@
             
             <button type="submit">Sign Up</button>
         </form>
+        {% if errors %}
+            <ul style="color:red;">
+                {% for key, value in errors.items %}
+                    <li>{{ value }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
     </div>
 </body>
 </html>

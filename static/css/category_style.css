@@ -55,7 +55,7 @@ body {
 .search-bar button {
     padding: 8px 12px;
     border: none;
-    background-color: #9f86c0; /* بنفش پاستلی */
+    background-color: #9f86c0; 
     color: #fff;
     border-radius: 0 20px 20px 0;
     cursor: pointer;
@@ -65,7 +65,7 @@ body {
     background-color: #be95c4;
 }
 
-/* Categories page styles */
+/* Categories page styles  */
 .categories-container {
     padding: 40px 20px;
     text-align: center;
@@ -86,7 +86,7 @@ body {
 }
 
 .category-card {
-    background-color: #ffe0e9; /* صورتی پاستلی */
+    background-color: #ffe0e9; 
     border-radius: 15px;
     padding: 30px 20px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -100,12 +100,12 @@ body {
 .category-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    background-color: #fcdde8; /* کمی روشن‌تر موقع هاور */
+    background-color: #fcdde8;
 }
 
 /* Footer styles */
 .footer {
-    background-color: #ffe0e9; /* صورتی پاستلی */
+    background-color: #ffe0e9;
     color: #5c5470;
     text-align: center;
     padding: 20px 10px;
