@@ -6,52 +6,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Profile - Skincare Platform</title>
     <link rel="stylesheet" href="{% static 'css/home_style.css' %}" />
+    <style>
+        .profile-pic-wrapper {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #9f86c0;
+        }
+        .upload-btn {
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #9f86c0;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <header class="navbar">
-        <div class="logo">
-            <a href="/home/">🌿 Skincare</a>
-        </div>
-        <nav class="nav-links">
-            <a href="/category/">Categories</a>
-            <a href="/quiz/">Quiz</a>
-            <a href="{% url 'profile' %}" class="profile-link">
-                <img src="{% static 'images/default-avatar.png' %}" alt="Profile" />
-                {{ user.username }}
-            </a>
-            <a href="{% url 'logout' %}" class="logout-link">Logout</a>
-        </nav>
-        <div class="search-bar">
-            <form action="/search/" method="get">
-                <input type="text" name="q" placeholder="Search products..." />
-                <button type="submit">🔍</button>
+<header class="navbar">
+    <div class="logo">
+        <a href="/home/">🌿 Skincare</a>
+    </div>
+    <nav class="nav-links">
+        <a href="/category/">Categories</a>
+        <a href="/quiz/">Quiz</a>
+        <a href="{% url 'profile' %}" class="profile-link">
+            <img src="{% if user.profile_image %}{{ user.profile_image.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" alt="Profile" class="profile-pic" style="width: 30px; height: 30px;" />
+            {{ user.username }}
+        </a>
+        <a href="{% url 'logout' %}" class="logout-link">Logout</a>
+    </nav>
+</header>
+
+<main class="main-content profile-content">
+    <h1>Welcome, {{ user.first_name }}!</h1>
+    <div class="profile-card">
+        <div class="profile-pic-wrapper">
+            <img src="{% if user.profile_image %}{{ user.profile_image.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" alt="Profile Picture" class="profile-pic" />
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="profile_image" id="fileInput" style="display: none;" onchange="document.getElementById('uploadBtn').click();" />
+                <label class="upload-btn" onclick="document.getElementById('fileInput').click();">
+                    {% if user.profile_image %}Change{% else %}Upload{% endif %}
+                </label>
+                <button type="submit" id="uploadBtn" style="display: none;">Submit</button>
             </form>
         </div>
-    </header>
 
-    <main class="main-content profile-content">
-        <h1>Welcome, {{ user.first_name }}!</h1>
-        <div class="profile-card">
-            <img src="{% static 'images/default-avatar.png' %}" alt="Profile Picture" class="profile-pic" />
-            <div class="profile-info">
-                <p><strong>Username:</strong> {{ user.username }}</p>
-                <p><strong>Full Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
-                <p><strong>Email:</strong> {{ user.email }}</p>
-                <p><strong>User Type:</strong> {{ user.user_type }}</p>
-            </div>
+        <div class="profile-info">
+            <p><strong>Username:</strong> {{ user.username }}</p>
+            <p><strong>Full Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>User Type:</strong> {{ user.user_type }}</p>
         </div>
-        <a href="/home/" class="btn">Back to Home</a>
-    </main>
+    </div>
 
-    <footer class="footer">
-        <div class="footer-content">
-            <p>&copy; 2025 Skincare Platform. All rights reserved.</p>
-            <nav class="footer-links">
-                <a href="/about/">About Us</a>
-                <a href="/contact/">Contact</a>
-                <a href="/privacy/">Privacy Policy</a>
-            </nav>
-        </div>
-    </footer>
+    <a href="/home/" class="btn">Back to Home</a>
+</main>
+
+<footer class="footer">
+    <div class="footer-content">
+        <p>&copy; 2025 Skincare Platform. All rights reserved.</p>
+    </div>
+</footer>
 </body>
 </html>

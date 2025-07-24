@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate , logout
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializer import LoginSerializer, SignUpSerializer
-from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+from .forms import UserImageForm
 
 
 class LoginAPIView(APIView):
@@ -83,8 +84,14 @@ def sign_up_page(request):
     return render(request, 'sign_up.html')
 
 
-def profile_page(request) :
-    return render(request,'profile.html')
+
+
+def profile_page(request):
+    if request.method == 'POST' and request.FILES.get('profile_image'):
+        request.user.profile_image = request.FILES['profile_image']
+        request.user.save()
+        return redirect('profile')
+    return render(request, 'profile.html')
 
 
 def logout_view(request):
