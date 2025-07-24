@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{% static 'css/product_list.css' %}">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo"><a href="/">🌿 Skincare</a></div>
+        <nav class="nav-links">
+            <a href="/category/">categories</a>
+            <a href="/quiz/">quiz</a>
+            <a href="/login/">login</a>
+        </nav>
+    </header>
+
+    <main class="product-container">
+        <h1>{{ title }}</h1>
+        <div class="products">
+            {% for product in products %}
+                <div class="product-card">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% endif %}
+                    <div class="product-info">
+                        <h3>{{ product.name }}</h3>
+                        <!-- <p>{{ product.description|truncatechars:100 }}</p> -->
+                        <span class="price">${{ product.price }}</span>
+                    </div>
+                </div>
+            {% empty %}
+                <p Not found</p>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+</html>

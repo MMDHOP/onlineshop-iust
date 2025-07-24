@@ -12,5 +12,7 @@ urlpatterns = [
     path('category/Mask/',Mask_page),
     path('category/Eye-Care/',Eye_Care_page),
 
-
+    # path('products/', product_list, name='product_list'),
 ]
+
+
