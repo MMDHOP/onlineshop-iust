@@ -6,6 +6,8 @@ from rest_framework import status
 from .serializer import LoginSerializer, SignUpSerializer
 from django.contrib.auth.decorators import login_required
 from .forms import UserImageForm
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
 
 class LoginAPIView(APIView):
@@ -92,6 +94,15 @@ def profile_page(request):
         request.user.save()
         return redirect('profile')
     return render(request, 'profile.html')
+
+
+@login_required
+@require_POST
+def delete_profile_image(request):
+    if request.user.profile_image:
+        request.user.profile_image.delete()
+        request.user.save()
+    return redirect('profile')
 
 
 def logout_view(request):

@@ -5,7 +5,8 @@ from .views import (
     sign_up_page,
     login_page,
     profile_page,
-    logout_view
+    logout_view,
+    delete_profile_image
 )
 
 urlpatterns = [
@@ -17,6 +18,8 @@ urlpatterns = [
     path('login/', login_page, name='login'),
     path('sign-up/', sign_up_page, name='sign_up'),
     path('profile/',profile_page,name='profile'),
-    path('logout/', logout_view, name='logout'),  
+    path('logout/', logout_view, name='logout'), 
+    path('profile/delete-image/', delete_profile_image, name='delete_profile_image'),
+ 
 
 ]

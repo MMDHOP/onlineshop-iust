@@ -1,0 +1,62 @@
+.profile-pic-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 30px 460px 20px;
+}
+
+.profile-pic {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #9f86c0;
+    margin-bottom: 15px;
+}
+
+.upload-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-btn {
+    padding: 0px 8px;
+    background-color: #9f86c0;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.upload-btn:hover {
+    background-color: #be95c4;
+}
+
+.profile-info {
+    text-align: center;
+    font-size: 1rem;
+    margin-bottom: 30px;
+}
+
+.delete-btn {
+    padding: 8px 18px;
+    background-color: #e57373;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.delete-btn:hover {
+    background-color: #ef5350;
+}
+
+.upload-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
