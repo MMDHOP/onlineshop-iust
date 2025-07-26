@@ -1,14 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate , logout
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from .serializer import LoginSerializer, SignUpSerializer
 from django.contrib.auth.decorators import login_required
-from .forms import UserImageForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
+from .forms import UserImageForm
+from .serializer import LoginSerializer, SignUpSerializer
+from user_agents import parse
 
 class LoginAPIView(APIView):
     def post(self, request):
@@ -93,7 +95,14 @@ def profile_page(request):
         request.user.profile_image = request.FILES['profile_image']
         request.user.save()
         return redirect('profile')
+    
+    if not request.user.device_type:
+        device = get_device_type(request)
+        request.user.device_type = device
+        request.user.save()
+
     return render(request, 'profile.html')
+
 
 
 @login_required
@@ -110,3 +119,16 @@ def logout_view(request):
     return redirect('home') 
 
 
+
+def get_device_type(request):
+    user_agent = request.META.get('HTTP_USER_AGENT', '')
+    user_agent_parsed = parse(user_agent)
+
+    if user_agent_parsed.is_mobile:
+        return 'mobile'
+    elif user_agent_parsed.is_tablet:
+        return 'tablet'
+    elif user_agent_parsed.is_pc:
+        return 'desktop'
+    else:
+        return 'unknown'
