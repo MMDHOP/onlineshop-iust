@@ -6,7 +6,8 @@ from .views import (
     login_page,
     profile_page,
     logout_view,
-    delete_profile_image
+    delete_profile_image,
+    edit_profile
 )
 
 urlpatterns = [
@@ -20,6 +21,7 @@ urlpatterns = [
     path('profile/',profile_page,name='profile'),
     path('logout/', logout_view, name='logout'), 
     path('profile/delete-image/', delete_profile_image, name='delete_profile_image'),
+    path('profile/edit/', edit_profile, name='edit_profile'),
  
 
 ]

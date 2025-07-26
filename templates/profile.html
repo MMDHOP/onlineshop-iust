@@ -34,17 +34,17 @@
                 {% csrf_token %}
                 <input type="file" name="profile_image" id="fileInput" style="display: none;" onchange="document.getElementById('uploadBtn').click();" />
                 <label class="upload-btn" onclick="document.getElementById('fileInput').click();">
-                    {% if user.profile_image %}Change{% else %}Upload{% endif %}
+                    <!-- {% if user.profile_image %}Change{% else %}Upload{% endif %} -->
                 </label>
-                <button type="submit" id="uploadBtn" style="display: none;">Submit</button>
+                <!-- <button type="submit" id="uploadBtn" style="display: none;">Submit</button> -->
             </form>
-
+<!-- 
             {% if user.profile_image %}
             <form method="post" action="{% url 'delete_profile_image' %}" class="delete-form">
                 {% csrf_token %}
                 <button type="submit" class="delete-btn">Delete</button>
             </form>
-            {% endif %}
+            {% endif %} -->
 
 
         </div>
@@ -55,10 +55,26 @@
                 <p><strong>Full Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
                 <p><strong>Email:</strong> {{ user.email }}</p>
                 <p><strong>User Type:</strong> {{ user.user_type }}</p>
+                <p><strong>skin type:</strong>{{ user.skin_type }}</p>
+                <p><strong>Concerns:</strong></p>
+                    {% for c in user.concern %}
+                        <li>{{ c }}</li>
+                    {% empty %}
+                        <li>Nothing selected</li>
+                    {% endfor %}
+                <p><strong>Preferences:</strong></p>
+                    {% for p in user.preferences %}
+                        <li>{{ p }}</li>
+                    {% empty %}
+                        <li>Nothing selected</li>
+                    {% endfor %}
             </div>
         </div>
 
         <a href="/home/" class="btn">Back to Home</a>
+
+        <a href="{% url 'edit_profile' %}" class="btn">Edit Profile</a>
+
     </main>
 
     <footer class="footer">

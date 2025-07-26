@@ -8,7 +8,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from .forms import UserImageForm
+
+from .forms import UserImageForm ,  ProfileEditForm
 from .serializer import LoginSerializer, SignUpSerializer
 from user_agents import parse
 
@@ -112,6 +113,21 @@ def delete_profile_image(request):
         request.user.profile_image.delete()
         request.user.save()
     return redirect('profile')
+
+
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = ProfileEditForm(instance=request.user)
+    
+    return render(request, 'edit_profile.html', {'form': form})
+
 
 
 def logout_view(request):

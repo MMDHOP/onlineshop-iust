@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/edit_profile_style.css' %}" />
+
+</head>
+<body>
+    <main class="main-content profile-content">
+        <h1>Edit Your Profile</h1>
+
+        <form method="post" enctype="multipart/form-data" class="profile-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            {% if user.profile_image %}
+                <img src="{{ user.profile_image.url }}" alt="Current Image" class="profile-pic" />
+                <a href="{% url 'delete_profile_image' %}" class="delete-btn" onclick="return confirm('Are you sure you want to delete your profile image?')">Delete Image</a>
+            {% endif %}
+
+            <button type="submit" class="upload-btn">Save Changes</button>
+        </form>
+
+        <a href="{% url 'profile' %}" class="btn">Cancel</a>
+    </main>
+</body>
+</html>
