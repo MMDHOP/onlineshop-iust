@@ -112,7 +112,7 @@ def delete_profile_image(request):
     if request.user.profile_image:
         request.user.profile_image.delete()
         request.user.save()
-    return redirect('profile')
+    return redirect('edit_profile')
 
 
 

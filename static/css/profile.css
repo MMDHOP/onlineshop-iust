@@ -21,7 +21,7 @@
     justify-content: center;
 }
 
-.upload-btn {
+/* .upload-btn {
     padding: 0px 8px;
     background-color: #9f86c0;
     color: white;
@@ -33,7 +33,7 @@
 
 .upload-btn:hover {
     background-color: #be95c4;
-}
+} */
 
 .profile-info {
     text-align: center;
@@ -41,7 +41,7 @@
     margin-bottom: 30px;
 }
 
-.delete-btn {
+/* .delete-btn {
     padding: 8px 18px;
     background-color: #e57373;
     color: white;
@@ -49,11 +49,11 @@
     border-radius: 20px;
     cursor: pointer;
     font-weight: 500;
-}
+} */
 
-.delete-btn:hover {
+/* .delete-btn:hover {
     background-color: #ef5350;
-}
+} */
 
 .upload-actions {
     display: flex;

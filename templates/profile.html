@@ -17,7 +17,7 @@
             <a href="/category/">Categories</a>
             <a href="/quiz/">Quiz</a>
             <a href="{% url 'profile' %}" class="profile-link">
-                <img src="{% if user.profile_image %}{{ user.profile_image.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" alt="Profile" class="profile-pic" style="width: 30px; height: 30px;" />
+                <!-- <img src="{% if user.profile_image %}{{ user.profile_image.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" alt="Profile" class="profile-pic" style="width: 30px; height: 30px;" /> -->
                 {{ user.username }}
             </a>
             <a href="{% url 'logout' %}" class="logout-link">Logout</a>
@@ -30,21 +30,21 @@
         <div class="profile-pic-wrapper">
             <img src="{% if user.profile_image %}{{ user.profile_image.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" alt="Profile Picture" class="profile-pic" />
 
-            <form method="post" enctype="multipart/form-data" class="upload-form">
+            <!-- <form method="post" enctype="multipart/form-data" class="upload-form">
                 {% csrf_token %}
                 <input type="file" name="profile_image" id="fileInput" style="display: none;" onchange="document.getElementById('uploadBtn').click();" />
                 <label class="upload-btn" onclick="document.getElementById('fileInput').click();">
-                    <!-- {% if user.profile_image %}Change{% else %}Upload{% endif %} -->
+                     {% if user.profile_image %}Change{% else %}Upload{% endif %} -->
                 </label>
                 <!-- <button type="submit" id="uploadBtn" style="display: none;">Submit</button> -->
-            </form>
-<!-- 
-            {% if user.profile_image %}
+            <!-- </form>
+  -->
+            <!-- {% if user.profile_image %}
             <form method="post" action="{% url 'delete_profile_image' %}" class="delete-form">
-                {% csrf_token %}
-                <button type="submit" class="delete-btn">Delete</button>
-            </form>
-            {% endif %} -->
+                 {% csrf_token %}
+                <button type="submit" class="delete-btn">Delete</button> -->
+            <!-- </form> -->
+            <!-- {% endif %}  --> -->
 
 
         </div>
