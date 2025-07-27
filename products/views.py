@@ -1,8 +1,10 @@
 from django.shortcuts import render
-
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse , request
 
 from .models import Product
+
+
 # Create your views here.
 
 def category_page(request):
@@ -40,5 +42,6 @@ def Eye_Care_page(request):
     return every_category_page(request, 'Eye Care', 'Eye-Care')
 
 
-
-
+def every_product_page(request,slug) :
+    product = get_object_or_404(Product , slug=slug)
+    return render(request, 'every_product.html' , {'product' : product})

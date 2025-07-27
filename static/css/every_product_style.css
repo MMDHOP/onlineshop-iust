@@ -1,0 +1,71 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #fdf6f0;
+    color: #264653;
+    padding: 40px;
+}
+
+.product-container {
+    display: flex;
+    gap: 40px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.image-section img {
+    width: 320px;
+    height: auto;
+    border-radius: 10px;
+    border: 3px solid #9f86c0;
+    object-fit: cover;
+}
+
+.info-section {
+    flex: 1;
+}
+
+.info-section h1 {
+    color: #5c5470;
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.description {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.price, .stock, .brand, .category {
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+}
+
+.attributes p {
+    margin: 8px 0;
+    font-size: 1rem;
+}
+
+strong {
+    color: #5c5470;
+}
+
+@media screen and (max-width: 768px) {
+    .product-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .image-section img {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .info-section {
+        text-align: center;
+    }
+}

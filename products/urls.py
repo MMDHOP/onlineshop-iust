@@ -11,8 +11,10 @@ urlpatterns = [
     path('category/Exfoliator/',Exfoliator_page),
     path('category/Mask/',Mask_page),
     path('category/Eye-Care/',Eye_Care_page),
-
-    # path('products/', product_list, name='product_list'),
+    # every products pages
+    
+    # EYE CARE :
+    path('category/<slug:slug>/', every_product_page, name='product_detail'),
 ]
 
 

@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ product.name }} - Product Details</title>
+    <link rel="stylesheet" href="{% static 'css/every_product_style.css' %}">
+</head>
+<body>
+    <div class="product-container">
+        <div class="image-section">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% else %}
+                <img src="{% static 'img/default-product.png' %}" alt="No image available">
+            {% endif %}
+        </div>
+        <div class="info-section">
+            <h1>{{ product.name }}</h1>
+            <p class="description">{{ product.description }}</p>
+            
+            <p class="price">Price: ${{ product.price }}</p>
+            <p class="stock">Available: {{ product.stock }}</p>
+            <p class="brand">Brand: {{ product.brand }}</p>
+            <p class="category">Category: {{ product.category }}</p>
+
+            <div class="attributes">
+                <p><strong>Skin Type:</strong> {{ product.skin_type|join:", " }}</p>
+                <p><strong>Concerns:</strong> {{ product.concern_targeted|join:", " }}</p>
+                <p><strong>Preferences:</strong> {{ product.preferences|join:", " }}</p>
+                <p><strong>Ingredients:</strong> {{ product.ingredient|join:", " }}</p>
+                <p><strong>Rating:</strong> {{ product.rating }} / 5</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

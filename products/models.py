@@ -1,7 +1,8 @@
 from django.db import models
-from multiselectfield import MultiSelectField
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.utils.text import slugify
 
+from multiselectfield import MultiSelectField
 class Product(models.Model):
     CATEGORY_CHOICES = [
         ('cleanser', 'cleanser'),
@@ -109,6 +110,20 @@ class Product(models.Model):
             ,default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     # tags = 
+    slug = models.SlugField(unique=True, blank=True)
+
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.name)
+            slug = base_slug
+            num = 1
+            while Product.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{num}"
+                num += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
+
 
     def __str__(self):
         return self.name
