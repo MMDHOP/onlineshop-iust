@@ -1,0 +1,51 @@
+<!-- templates/quiz/quiz.html -->
+{% load static %}
+<html>
+<head>
+    <title>Skin Quiz</title>
+    <link rel="stylesheet" href="{% static 'css/quiz.css' %}
+">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <a href="/home/">🌿 Skincare</a>
+        </div>
+        <nav class="nav-links">
+            <a href="/category/">Categories</a>
+            <a href="/quiz/">Quiz</a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}">Profile</a>
+                <a href="{% url 'logout' %}">logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'sign_up' %}">Register</a>
+            {% endif %}
+        </nav>
+    </header>
+    <div class="profile-content">
+        <form method="post">
+            {% csrf_token %}
+            {% if error %}
+                <p style="color: red;">{{ error }}</p>
+            {% endif %}
+
+            {% for i, question in questions %}
+                <div class="profile-card">
+                    <div class="profile-info">
+                        <p><strong>Q{{ i|add:1 }}:</strong> {{ question }}</p>
+                        {% for option in options %}
+                            <label>
+                                <input type="radio" name="q{{ i }}" value="{{ option }}"> {{ option }}
+                            </label><br>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+
+            <button class="btn" type="submit">Get Recommendation</button>
+        </form>
+    </div>
+</body>
+</html>
