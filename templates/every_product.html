@@ -6,10 +6,9 @@
     <title>{{ product.name }} - Product Details</title>
     <link rel="stylesheet" href="{% static 'css/every_product_style.css' %}">
     <link rel="stylesheet" href="{% static 'css/home_style.css' %}">
-
 </head>
 <body>
-        <!-- Navbar -->
+
     <header class="navbar">
         <div class="logo">
             <a href="/home/">🌿 Skincare</a>
@@ -20,7 +19,7 @@
 
             {% if user.is_authenticated %}
                 <a href="{% url 'profile' %}">Profile</a>
-                <a href="{% url 'logout' %}">logout</a>
+                <a href="{% url 'logout' %}">Logout</a>
             {% else %}
                 <a href="{% url 'login' %}">Login</a>
                 <a href="{% url 'sign_up' %}">Register</a>
@@ -33,6 +32,7 @@
             </form>
         </div>
     </header>
+
     <div class="product-container">
         <div class="image-section">
             {% if product.image %}
@@ -43,12 +43,10 @@
         </div>
         <div class="info-section">
             <h1>{{ product.name }}</h1>
-            <p class="description">{{ product.description }}</p>
-            
-            <p class="price">Price: ${{ product.price }}</p>
-            <p class="stock">Available: {{ product.stock }}</p>
-            <p class="brand">Brand: {{ product.brand }}</p>
-            <p class="category">Category: {{ product.category }}</p>
+            <p class="price"><strong>Price:</strong> ${{ product.price }}</p>
+            <p class="stock"><strong>Available:</strong> {{ product.stock }}</p>
+            <p class="brand"><strong>Brand:</strong> {{ product.brand }}</p>
+            <p class="category"><strong>Category:</strong> {{ product.category }}</p>
 
             <div class="attributes">
                 <p><strong>Skin Type:</strong> {{ product.skin_type|join:", " }}</p>
@@ -56,9 +54,28 @@
                 <p><strong>Preferences:</strong> {{ product.preferences|join:", " }}</p>
                 <p><strong>Ingredients:</strong> {{ product.ingredient|join:", " }}</p>
                 <p><strong>Rating:</strong> {{ product.rating }} / 5</p>
+                <p><strong>Description:</strong> {{ product.description }}</p>
             </div>
         </div>
     </div>
+    
+    <section class="comments">
+        <h2>💬 Comments</h2>
+        {% if product.comments.all %}
+            {% for comment in product.comments.all %}
+                <div class="comment-card">
+                    <div class="comment-header">
+                        <span class="comment-user">{{ comment.user.username }}</span>
+                        <span class="comment-date">{{ comment.created_at|date:"Y-m-d H:i" }}</span>
+                    </div>
+                    <p class="comment-text">{{ comment.text }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-comment">No comments yet.</p>
+        {% endif %}
+    </section>
+
     <footer class="footer">
         <div class="footer-content">
             <p>&copy; 2025 Skincare Platform. All rights reserved.</p>
