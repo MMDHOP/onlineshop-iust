@@ -2,7 +2,10 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse , request
 
-from .models import Product
+from rest_framework import generics , permissions
+
+from .models import Product , Comments
+from .serialzer import CommentsSerialzer
 
 
 # Create your views here.
@@ -45,3 +48,6 @@ def Eye_Care_page(request):
 def every_product_page(request,slug) :
     product = get_object_or_404(Product , slug=slug)
     return render(request, 'every_product.html' , {'product' : product})
+
+
+
