@@ -60,3 +60,18 @@
     gap: 10px;
     justify-content: center;
 }
+
+.btn-cart {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #5c5470;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.btn-cart:hover {
+    background-color: #443b5c;
+}

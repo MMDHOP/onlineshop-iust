@@ -1,7 +1,6 @@
 from django.shortcuts import render , redirect , get_object_or_404
 from django.http import HttpResponse , request , response 
 
-
 from rest_framework import generics , permissions, status
 from rest_framework.views import APIView
 

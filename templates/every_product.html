@@ -57,6 +57,18 @@
                 <p><strong>Description:</strong> {{ product.description }}</p>
             </div>
         </div>
+        {% if user.is_authenticated %}
+        <form id="add-to-cart-form">
+            {% csrf_token %}
+            <input type="hidden" name="product" value="{{ product.id }}">
+            <input type="number" name="quantity" value="1" min="1" max="{{ product.stock }}">
+            <button type="submit" class="submit-comment">Add to Cart 🛒</button>
+        </form>
+        <p id="cart-message" style="color: green; margin-top: 10px;"></p>
+        {% else %}
+        <p>You must <a href="{% url 'login' %}">log in</a> to add to cart.</p>
+        {% endif %}
+
     </div>
     
     <section class="comments">
@@ -99,5 +111,45 @@
             </nav>
         </div>
     </footer>
+    <script>
+document.getElementById('add-to-cart-form')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const product = form.product.value;
+    const quantity = parseInt(form.quantity.value);
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    fetch('/api/cart/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,
+        },
+        body: JSON.stringify({
+            product: product,
+            quantity: quantity
+        }),
+    })
+    .then(async res => {
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw errorData;
+        }
+        return res.json();
+    })
+    .then(data => {
+        document.getElementById('cart-message').style.color = 'green';
+        document.getElementById('cart-message').textContent = "✅ Added to cart!";
+    })
+    .catch(error => {
+        console.error('Error response from API:', error);
+        document.getElementById('cart-message').style.color = 'red';
+        document.getElementById('cart-message').textContent = '❌ Error adding to cart: ' + JSON.stringify(error);
+    });
+});
+
+</script>
+
 </body>
 </html>

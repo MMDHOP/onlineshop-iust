@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="{% static 'css/cart_detail_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home_style.css' %}">
+
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <a href="/home/">🌿 Skincare</a>
+        </div>
+        <nav class="nav-links">
+            <a href="/category/">Categories</a>
+            <a href="/quiz/">Quiz</a>
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </nav>
+    </header>
+
+    <main class="cart-container">
+        <h1>Your Cart 🛒</h1>
+
+        {% if cart_items %}
+            <ul class="cart-items-list">
+                {% for item in cart_items %}
+                    <li class="cart-item">
+                        <div class="item-name">{{ item.product.name }}</div>
+                        <div class="item-quantity">Quantity: {{ item.quantity }}</div>
+                        <div class="item-price">Price: ${{ item.product.price }}</div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty-cart-msg">Your cart is empty.</p>
+        {% endif %}
+
+        <a href="/profile/" class="btn-back-profile">← Back to profile</a>
+    </main>
+
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Skincare Platform. All rights reserved.</p>
+            <nav class="footer-links">
+                <a href="/about/">About Us</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy/">Privacy Policy</a>
+            </nav>
+        </div>
+    </footer>
+</body>
+</html>
