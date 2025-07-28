@@ -1,11 +1,12 @@
-from django.shortcuts import render
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponse , request
+from django.shortcuts import render , redirect , get_object_or_404
+from django.http import HttpResponse , request , response 
 
-from rest_framework import generics , permissions
+
+from rest_framework import generics , permissions, status
+from rest_framework.views import APIView
 
 from .models import Product , Comments
-from .serialzer import CommentsSerialzer
+from .serialzers import CommentsSerialzer
 
 
 # Create your views here.
@@ -50,4 +51,13 @@ def every_product_page(request,slug) :
     return render(request, 'every_product.html' , {'product' : product})
 
 
+class AddingComments(APIView):
+    permission_classes = [permissions.IsAuthenticated]
 
+    def post(self, request):
+        serializer = CommentsSerialzer(data=request.data)
+        if serializer.is_valid():
+            comment = serializer.save(user=request.user)
+            slug = comment.product.slug 
+            return redirect('product_detail', slug=slug)
+        return redirect(request.META.get('HTTP_REFERER', '/'))
