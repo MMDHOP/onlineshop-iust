@@ -124,7 +124,7 @@ TAGS_BY_QUESTION = {
 
 
 
-
+@login_required
 def quiz_view(request):
     if request.method == 'POST':
         answers = [request.POST.get(f'q{i}') for i in range(10)]
@@ -156,6 +156,7 @@ def quiz_view(request):
         'questions': zip(range(10), QUESTIONS),
         'options': OPTIONS
     })
+
 
 
 def products_list_view(request, products, title):
