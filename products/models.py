@@ -17,82 +17,86 @@ class Product(models.Model):
         ('Mask', 'Mask'),
         ('Eye-Care', 'Eye-Care'),
     ]
-    CONCERNS_TARGETS = (
-    ('acne', 'Acne (جوش)'),
-    ('dullness', 'Dullness (کدر بودن پوست)'),
-    ('wrinkles', 'Wrinkles & Fine Lines (چین و چروک)'),
-    ('dark_spots', 'Dark Spots (لک‌های تیره)'),
-    ('redness', 'Redness (قرمزی پوست)'),
-    ('pores', 'Large Pores (منافذ باز)'),
-    ('uneven_tone', 'Uneven Skin Tone (ناهمواری رنگ پوست)'),
-    ('blackheads', 'Blackheads (جوش سرسیاه)'),
-    ('puffiness', 'Puffiness (پف پوست)'),
-    ('dark_circles', 'Dark Circles (تیرگی دور چشم)'),
-)
-    SKIN_TYPES = (
+
+    CONCERNS_TARGETS = [
+        ('acne', 'acne'),
+        ('dullness', 'dullness'),
+        ('wrinkles', 'wrinkles'),
+        ('dark_spots', 'dark_spots'),
+        ('redness', 'redness'),
+        ('pores', 'pores'),
+        ('uneven_tone', 'uneven_tone'),
+        ('blackheads', 'blackheads'),
+        ('puffiness', 'puffiness'),
+        ('dark_circles', 'dark_circles'),
+    ]
+
+    SKIN_TYPES = [
         ('dry','dry'),
         ('oily','oily'),
-        ('combintion','combintaion'),
+        ('combination','combination'),
         ('sensitive','sensitive'),
-    )
-    PREFERENCES = (
-        ('fragrance_free', 'Fragrance-Free (بدون عطر)'),
-        ('alcohol_free', 'Alcohol-Free (بدون الکل)'),
-        ('cruelty_free', 'Cruelty-Free (تست نشده روی حیوانات)'),
-        ('vegan', 'Vegan (کاملاً گیاهی)'),
-        ('paraben_free', 'Paraben-Free (بدون پارابن)'),
-        ('non_comedogenic', 'Non-Comedogenic (نمسدودکننده منافذ نیست)'),
-        ('dermatologist_tested', 'Dermatologist Tested (تایید شده توسط متخصص پوست)'),
-        ('eco_friendly', 'Eco-Friendly (سازگار با محیط زیست)'),
-        ('sulfate_free', 'Sulfate-Free (بدون سولفات)'),
-        ('natural_ingredients', 'Natural Ingredients (ترکیبات طبیعی)'),
-    )
+    ]
 
-    INGREDIENTS = (
-        # مواد مرطوب‌کننده و آبرسان:
-        ('hyaluronic_acid', 'Hyaluronic Acid (اسید هیالورونیک)'),
-        ('glycerin', 'Glycerin (گلیسیرین)'),
-        ('squalane', 'Squalane (اسکوالان)'),
-        ('panthenol', 'Panthenol (پانتنول)'),
-        ('aloe_vera', 'Aloe Vera (آلوئه‌ورا)'),
-        # ایه‌بردارهای شیمیایی:
-        ('salicylic_acid', 'Salicylic Acid (اسید سالیسیلیک)'),
-        ('glycolic_acid', 'Glycolic Acid (اسید گلیکولیک)'),
-        ('lactic_acid', 'Lactic Acid (اسید لاکتیک)'),
-        ('mandelic_acid', 'Mandelic Acid (اسید ماندلیک)'),
-        ('azelaic_acid', 'Azelaic Acid (اسید آزلائیک)'),
-        #  روشن‌کننده‌ها و ضدلک:
-        ('vitamin_c', 'Vitamin C (ویتامین سی)'),
-        ('arbutin', 'Arbutin (آربوتین)'),
-        ('kojic_acid', 'Kojic Acid (اسید کوجیک)'),
-        ('licorice_extract', 'Licorice Extract (عصاره شیرین‌بیان)'),
-        ('niacinamide', 'Niacinamide (نیاسینامید)'),
-        # مواد محافظت‌کننده:
-        ('zinc_oxide', 'Zinc Oxide (اکسید روی)'),
-        ('titanium_dioxide', 'Titanium Dioxide (دی‌اکسید تیتانیوم)'),
-        ('green_tea_extract', 'Green Tea Extract (عصاره چای سبز)'),
-        ('vitamin_e', 'Vitamin E (ویتامین E)'),
-        ('centella_asiatica', 'Centella Asiatica (سنتلا آسیاتیکا/علف ببر)'),
-        #  مواد طبیعی معروف:
-        ('rosehip_oil', 'Rosehip Oil (روغن نسترن وحشی)'),
-        ('argan_oil', 'Argan Oil (روغن آرگان)'),
-        ('tea_tree_oil', 'Tea Tree Oil (روغن درخت چای)'),
-        ('chamomile_extract', 'Chamomile Extract (عصاره بابونه)'),
-        ('caffeine', 'Caffeine (کافئین - ضد پف و تیرگی)'),
-        # مواد ضدپیری (Anti-aging):
-        ('retinol', 'Retinol (رتینول)'),
-        ('retinaldehyde', 'Retinaldehyde (رتین‌آلدئید)'),
-        ('bakuchiol', 'Bakuchiol (باکوچیول، جایگزین گیاهی رتینول)'),
-        ('peptides', 'Peptides (پپتیدها)'),
-        ('collagen', 'Collagen (کلاژن)'),
-        ('dimethicone', 'Dimethicone (دیمتیکون - پایه سیلیکونی)'),
-        # مواد آرایشی رایج:
-        ('mica', 'Mica (میکا - براق‌کننده)'),
-        ('iron_oxides', 'Iron Oxides (رنگدانه‌های اکسید آهن)'),
-        ('talc', 'Talc (تالک)'),
-        ('silica', 'Silica (سیلیکا)'),
+    PREFERENCES = [
+        ('fragrance_free', 'fragrance_free'),
+        ('alcohol_free', 'alcohol_free'),
+        ('cruelty_free', 'cruelty_free'),
+        ('vegan', 'vegan'),
+        ('paraben_free', 'paraben_free'),
+        ('non_comedogenic', 'non_comedogenic'),
+        ('dermatologist_tested', 'dermatologist_tested'),
+        ('eco_friendly', 'eco_friendly'),
+        ('sulfate_free', 'sulfate_free'),
+        ('natural_ingredients', 'natural_ingredients'),
+    ]
 
-    )
+    INGREDIENTS = [
+        # Hydrating
+        ('hyaluronic_acid', 'hyaluronic_acid'),
+        ('glycerin', 'glycerin'),
+        ('squalane', 'squalane'),
+        ('panthenol', 'panthenol'),
+        ('aloe_vera', 'aloe_vera'),
+        # Exfoliants
+        ('salicylic_acid', 'salicylic_acid'),
+        ('glycolic_acid', 'glycolic_acid'),
+        ('lactic_acid', 'lactic_acid'),
+        ('mandelic_acid', 'mandelic_acid'),
+        ('azelaic_acid', 'azelaic_acid'),
+        # Brightening
+        ('vitamin_c', 'vitamin_c'),
+        ('arbutin', 'arbutin'),
+        ('kojic_acid', 'kojic_acid'),
+        ('licorice_extract', 'licorice_extract'),
+        ('niacinamide', 'niacinamide'),
+        # Protection
+        ('zinc_oxide', 'zinc_oxide'),
+        ('titanium_dioxide', 'titanium_dioxide'),
+        ('green_tea_extract', 'green_tea_extract'),
+        ('vitamin_e', 'vitamin_e'),
+        ('centella_asiatica', 'centella_asiatica'),
+        # Natural
+        ('rosehip_oil', 'rosehip_oil'),
+        ('argan_oil', 'argan_oil'),
+        ('tea_tree_oil', 'tea_tree_oil'),
+        ('chamomile_extract', 'chamomile_extract'),
+        ('caffeine', 'caffeine'),
+        # Anti-aging
+        ('retinol', 'retinol'),
+        ('retinaldehyde', 'retinaldehyde'),
+        ('bakuchiol', 'bakuchiol'),
+        ('peptides', 'peptides'),
+        ('collagen', 'collagen'),
+        ('dimethicone', 'dimethicone'),
+        # Cosmetic
+        ('mica', 'mica'),
+        ('iron_oxides', 'iron_oxides'),
+        ('talc', 'talc'),
+        ('silica', 'silica'),
+    ]
+
+    TAGS_CHOICES = CATEGORY_CHOICES + SKIN_TYPES + CONCERNS_TARGETS + PREFERENCES + INGREDIENTS
 
     name = models.CharField(max_length=150)
     description = models.TextField(blank=True)
@@ -112,7 +116,7 @@ class Product(models.Model):
             ]
             ,default=1)
     created_at = models.DateTimeField(auto_now_add=True)
-    # tags = 
+    tags = MultiSelectField(choices=TAGS_CHOICES,blank=True)
     slug = models.SlugField(unique=True, blank=True)
 
 

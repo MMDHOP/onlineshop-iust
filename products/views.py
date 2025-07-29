@@ -3,6 +3,7 @@ from django.http import HttpResponse , request , response
 
 from rest_framework import generics , permissions, status
 from rest_framework.views import APIView
+from rest_framework.response import Response
 
 from .models import Product , Comments
 from .serialzers import CommentsSerialzer
@@ -60,3 +61,34 @@ class AddingComments(APIView):
             slug = comment.product.slug 
             return redirect('product_detail', slug=slug)
         return redirect(request.META.get('HTTP_REFERER', '/'))
+    
+
+
+def products_list_view(request, products, title):
+    return render(request, 'products_list.html', {'products': products, 'title': title})
+
+
+
+def tag_filter_view(request, tag):
+    products = Product.objects.filter(tags__contains=[tag])
+    li = ['cleanser','Toner-Essence','Serum-Treatments','Moisturizer','Sunscreen','Exfoliator','Mask','Eye-Care'] 
+    if tag == li[0] :
+        return cleanser_page(request)
+    elif tag == li[1] :
+        return Toner_Essence_page(request)
+    elif tag == li[2] :
+        return Serum_Treatments_page(request)
+    elif tag == li[3] :
+        return Moisturizer_page(request)
+    elif tag == li[4] :
+        return Sunscreen_page(request)
+    elif tag == li[5] :
+        return Exfoliator_page(request)
+    elif tag == li[6] :
+        return Mask_page(request)
+    elif tag == li[7] :
+        return Eye_Care_page(request)
+
+
+    return products_list_view(request, products, title=f"Tag: {tag}")
+

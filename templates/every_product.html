@@ -55,6 +55,12 @@
                 <p><strong>Ingredients:</strong> {{ product.ingredient|join:", " }}</p>
                 <p><strong>Rating:</strong> {{ product.rating }} / 5</p>
                 <p><strong>Description:</strong> {{ product.description }}</p>
+                <p><strong>Tags:</strong></p>
+                <ul class="tag-list">
+                    {% for tag in product.tags %}
+                        <li><a href="{% url 'tag_filter' tag %}">#{{ tag }}</a></li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
         {% if user.is_authenticated %}

@@ -180,3 +180,28 @@ strong {
   font-size: 14px;
   font-weight: bold;
 }
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.tag-list li {
+    list-style: none;
+}
+
+.tag-list a {
+    text-decoration: none;
+    background-color: #ffe0e9;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #264653;
+    transition: 0.2s ease-in-out;
+}
+
+.tag-list a:hover {
+    background-color: #be95c4;
+    color: white;
+}
