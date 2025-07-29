@@ -1,7 +1,15 @@
-from django.shortcuts import render
+from django.utils import timezone
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.utils.timezone import now
+from django.db.models import Q
+
+from datetime import timedelta
+
+from .models import Quiz
+from products.models import Product
 
 # Create your views here.
-# quiz/views.py
 
 
 QUESTIONS = [
@@ -99,6 +107,24 @@ RECOMMENDATIONS = {
         5: "Excellent care. You're doing great!",
     }
 }
+
+TAGS_BY_QUESTION = {
+    0: ['dry', 'oily', 'combination', '', 'oil_free', 'mattifying'],
+    1: ['acne', 'non_comedogenic', 'salicylic_acid', 'gentle_cleanser', 'dermatologist_tested'],
+    2: ['sensitive', 'fragrance_free', 'hypoallergenic', 'patch_test', 'alcohol_free'],
+    3: ['dry', 'oil_based_cleanser', 'cream_cleanser', 'gel_cleanser', 'foaming_cleanser'],
+    4: ['exfoliator', 'gentle_exfoliation', 'natural_ingredients', 'chemical_exfoliant', 'sensitive'],
+    5: ['sunscreen', 'spf', 'sun_protection', 'eco_friendly', 'hat', 'daily_use'],
+    6: ['hydrated', 'hyaluronic_acid', '', 'serum', 'hydrating_toner', 'dry'],
+    7: ['dark_spots', 'pigmentation', 'vitamin_c', 'niacinamide', 'alpha_arbutin', 'brightening'],
+    8: ['wrinkles', 'firming', 'anti_aging', 'rich_cream', 'serum'],
+    9: ['', 'serum', 'cleanser', 'sunscreen', 'routine', 'skincare_basic'],
+}
+
+
+
+
+
 def quiz_view(request):
     if request.method == 'POST':
         answers = [request.POST.get(f'q{i}') for i in range(10)]
@@ -110,13 +136,35 @@ def quiz_view(request):
             })
 
         scores = [SCORE_MAP[a] for a in answers]
-        recommendations = [
-            RECOMMENDATIONS[i][score] for i, score in enumerate(scores)
-        ]
-        return render(request, 'result.html', {
-                'recommendations': zip(QUESTIONS, recommendations)
+        recommendations = []
+        for i, score in enumerate(scores):
+            text = RECOMMENDATIONS[i][score]
+            tags = TAGS_BY_QUESTION.get(i, [])
+            # اگر لازم است فیلتر کن تگ‌های خالی را حذف کن:
+            tags = [tag for tag in tags if tag]
+            recommendations.append({
+                'question': QUESTIONS[i],
+                'text': text,
+                'tags': tags,
             })
+
+        return render(request, 'result.html', {
+            'recommendations': recommendations
+        })
+
     return render(request, 'quiz.html', {
         'questions': zip(range(10), QUESTIONS),
         'options': OPTIONS
     })
+
+
+def products_list_view(request, products, title):
+    return render(request, 'products_list.html', {'products': products, 'title': title})
+
+
+def tag_filter_view(request, tag):
+    products = Quiz.objects.filter(tags__contains=[tag])
+
+
+    return products_list_view(request, products, title=f"Tag: {tag}")
+

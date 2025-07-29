@@ -193,3 +193,23 @@ body {
         font-size: 0.9rem;
     }
 }
+
+.tag-container {
+    margin-top: 10px;
+}
+
+.tag-link {
+    display: inline-block;
+    background-color: #f2edf8;
+    color: #5d4b80;
+    border-radius: 12px;
+    padding: 6px 12px;
+    margin: 4px 6px 0 0;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: background-color 0.3s;
+}
+
+.tag-link:hover {
+    background-color: #d9cbee;
+}

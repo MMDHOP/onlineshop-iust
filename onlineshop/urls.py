@@ -26,7 +26,7 @@ urlpatterns = [
     path('home/',homepage, name='home'),
     path('',include('users.urls')),
     path('',include('products.urls')),
-    path('quiz/',include('quiz.urls')),
+    path('',include('quiz.urls')),
     path('',include('carts.urls'))
 
 ]

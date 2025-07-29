@@ -27,14 +27,22 @@
     <div class="profile-content">
         <h1 style="text-align: center; color: #6a5d7b; margin-bottom: 30px;">Your Personalized Skincare Recommendations</h1>
 
-        {% for question, recommendation in recommendations %}
-            <div class="profile-card">
-                <div class="profile-info">
-                    <p><strong>{{ question }}</strong></p>
-                    <p style="color: #5d4b80;">{{ recommendation }}</p>
+            {% for rec in recommendations %}
+                <div class="profile-card">
+                    <div class="profile-info">
+                        <p><strong>{{ rec.question }}</strong></p>
+                        <p style="color: #5d4b80;">{{ rec.text }}</p>
+                        {% if rec.tags %}
+                            <div class="tag-container">
+                                {% for tag in rec.tags %}
+                                    <a href="{% url 'tag_filter' tag %}" class="tag-link">#{{ tag }}</a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+
 
         <div style="text-align: center; margin-top: 40px;">
             <a href="{% url 'quiz' %}" class="btn">Take Quiz Again</a>
