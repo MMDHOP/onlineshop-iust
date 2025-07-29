@@ -11,7 +11,7 @@
     border-radius: 50%;
     object-fit: cover;
     border: 1px solid #9f86c0;
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 }
 
 .upload-form {
@@ -61,17 +61,18 @@
     justify-content: center;
 }
 
-.btn-cart {
+.btn {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #5c5470;
+    background-color: #9f86c0;
     color: white;
     border-radius: 8px;
     text-decoration: none;
     font-weight: bold;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
+    margin-top: 20px;
 }
 
-.btn-cart:hover {
-    background-color: #443b5c;
+.btn:hover {
+    background-color: #be95c4;
 }

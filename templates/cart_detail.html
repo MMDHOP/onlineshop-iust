@@ -28,9 +28,19 @@
             <ul class="cart-items-list">
                 {% for item in cart_items %}
                     <li class="cart-item">
-                        <div class="item-name">{{ item.product.name }}</div>
+
+                        <div class="item-name"><a href="{% url 'product_detail' item.product.slug %}">{{ item.product.name }}</a></div>
                         <div class="item-quantity">Quantity: {{ item.quantity }}</div>
                         <div class="item-price">Price: ${{ item.product.price }}</div>
+
+                        <div class="item-remove">
+                            <form action="{% url 'remove_from_cart' item.id %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="remove-button"> ❌ </button>
+                            </form>
+                        </div>
+                    </li>
+
                     </li>
                 {% endfor %}
             </ul>

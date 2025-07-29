@@ -43,7 +43,7 @@
                     <div class="product-info">
                         <a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a>
                         <h4>{{ product.brand }}</h4>
-                        <span class="price">${{ product.price }}</span>
+                        <span class="price">IRR {{ product.price }}</span>
                     </div>
                 </div>
             {% empty %}

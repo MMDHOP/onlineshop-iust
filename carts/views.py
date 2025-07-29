@@ -46,4 +46,13 @@ def cart_detail_view(request):
     cart = Cart.objects.filter(user=request.user).first()
     cart_items = cart.items.select_related('product') if cart else []
 
+
     return render(request, 'cart_detail.html', {'cart_items': cart_items})
+
+
+
+@login_required
+def remove_from_cart(request, item_id):
+    cart_item = get_object_or_404(CartItem, id=item_id, cart__user=request.user)
+    cart_item.delete()
+    return redirect('cart-detail')

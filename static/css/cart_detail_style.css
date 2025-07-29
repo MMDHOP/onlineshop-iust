@@ -109,3 +109,16 @@ body {
     margin-top: 50px;
     font-size: 0.9rem;
 } */
+.remove-button {
+    background-color: hsl(255, 255%, 255%);
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.remove-button:hover {
+    background-color: hsl(255, 255%, 255%);
+}

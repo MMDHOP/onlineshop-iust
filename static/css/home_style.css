@@ -83,11 +83,11 @@ body {
     margin-bottom: 30px;
 }
 
-.btn {
+/* .btn {
     padding: 10px 25px;
     background-color: #9f86c0;
     color: white;
-    border-radius: 25px;
+    border-radius: 50px;
     text-decoration: none;
     font-weight: 500;
     transition: background-color 0.3s;
@@ -95,7 +95,7 @@ body {
 
 .btn:hover {
     background-color: #be95c4;
-}
+} */
 /* Footer styles */
 .footer {
     background-color: #ffe0e9; 

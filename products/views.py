@@ -70,7 +70,7 @@ def products_list_view(request, products, title):
 
 
 def tag_filter_view(request, tag):
-    products = Product.objects.filter(tags__contains=[tag])
+    products = Product.objects.filter(tags__contains=tag)
     li = ['cleanser','Toner-Essence','Serum-Treatments','Moisturizer','Sunscreen','Exfoliator','Mask','Eye-Care'] 
     if tag == li[0] :
         return cleanser_page(request)

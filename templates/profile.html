@@ -25,27 +25,10 @@
     </header>
 
     <main class="main-content profile-content">
-        <h1>Welcome, {{ user.username }}!</h1>
+        <h1>Welcome {{ user.username }}!</h1>
 
         <div class="profile-pic-wrapper">
             <img src="{% if user.profile_image %}{{ user.profile_image.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" alt="Profile Picture" class="profile-pic" />
-
-            <!-- <form method="post" enctype="multipart/form-data" class="upload-form">
-                {% csrf_token %}
-                <input type="file" name="profile_image" id="fileInput" style="display: none;" onchange="document.getElementById('uploadBtn').click();" />
-                <label class="upload-btn" onclick="document.getElementById('fileInput').click();">
-                     {% if user.profile_image %}Change{% else %}Upload{% endif %} -->
-                </label>
-                <!-- <button type="submit" id="uploadBtn" style="display: none;">Submit</button> -->
-            <!-- </form>
-  -->
-            <!-- {% if user.profile_image %}
-            <form method="post" action="{% url 'delete_profile_image' %}" class="delete-form">
-                 {% csrf_token %}
-                <button type="submit" class="delete-btn">Delete</button> -->
-            <!-- </form> -->
-            <!-- {% endif %}  --> -->
-
 
         </div>
 
@@ -70,11 +53,11 @@
                     {% endfor %}
             </div>
         </div>
-        <a href="{% url 'cart-detail' %}" class="btn-cart">Your Cart 🛒</a>
+        <a href="{% url 'cart-detail' %}" class="btn">Your Cart🛒</a>
 
-        <a href="/home/" class="btn">Back to Home</a>
+        <a href="/home/" class="btn">Back to Home🏡</a>
 
-        <a href="{% url 'edit_profile' %}" class="btn">Edit Profile</a>
+        <a href="{% url 'edit_profile' %}" class="btn">Edit Profile✏️</a>
         
 
 
