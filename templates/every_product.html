@@ -53,7 +53,28 @@
                 <p><strong>Concerns:</strong> {{ product.concern_targeted|join:", " }}</p>
                 <p><strong>Preferences:</strong> {{ product.preferences|join:", " }}</p>
                 <p><strong>Ingredients:</strong> {{ product.ingredient|join:", " }}</p>
-                <p><strong>Rating:</strong> {{ product.rating }} / 5</p>
+                <p><strong>Rating:</strong> {{ avg_rating }} / 5 ⭐</p>
+                    {% if user.is_authenticated %}
+                        {% if user_rating %}
+                            <p><strong>Your Rating:</strong> {{ user_rating.score }} ⭐</p>
+                        {% else %}
+                            <div class="rating-stars">
+                                <p><strong>Rate this product:</strong></p>
+                                <form id="rating-form">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="product" value="{{ product.id }}">
+                                    <div class="stars">
+                                        {% for i in "12345" %}
+                                            <span class="star" data-score="{{ i }}">&#9734;</span>
+                                        {% endfor %}
+                                    </div>
+                                </form>
+                                <p id="rating-message" style="margin-top: 10px; color: green;"></p>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+
+
                 <p><strong>Description:</strong> {{ product.description }}</p>
                 <p><strong>Tags:</strong></p>
                 <ul class="tag-list">
@@ -85,6 +106,7 @@
                     <div class="comment-header">
                         <span class="comment-user">{{ comment.user.username }}</span>
                         <span class="comment-date">{{ comment.created_at|date:"Y-m-d H:i" }}</span>
+                        
                     </div>
                     <p class="comment-text">{{ comment.text }}</p>
                 </div>
@@ -156,6 +178,59 @@ document.getElementById('add-to-cart-form')?.addEventListener('submit', function
 });
 
 </script>
+<script>
+document.querySelectorAll('.star').forEach(star => {
+    star.addEventListener('mouseenter', function () {
+        const score = parseInt(this.dataset.score);
+        highlightStars(score);
+    });
+    star.addEventListener('mouseleave', function () {
+        clearHighlights();
+    });
+    star.addEventListener('click', function () {
+        const score = parseInt(this.dataset.score);
+        const productId = document.querySelector('[name="product"]').value;
+        const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        fetch('/rate/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+            },
+            body: JSON.stringify({
+                product: productId,
+                score: score
+            }),
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.querySelector('.rating-stars').innerHTML = `<p><strong>Your Rating:</strong> ${score} ⭐</p>`;
+        })
+        .catch(err => {
+            console.error(err);
+            document.getElementById('rating-message').textContent = '❌ Error rating product.';
+            document.getElementById('rating-message').style.color = 'red';
+        });
+    });
+});
+
+function highlightStars(score) {
+    document.querySelectorAll('.star').forEach(star => {
+        const s = parseInt(star.dataset.score);
+        if (s <= score) {
+            star.classList.add('hovered');
+        }
+    });
+}
+
+function clearHighlights() {
+    document.querySelectorAll('.star').forEach(star => {
+        star.classList.remove('hovered');
+    });
+}
+</script>
+
 
 </body>
 </html>

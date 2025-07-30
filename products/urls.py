@@ -14,7 +14,8 @@ urlpatterns = [
     path('category/<slug:slug>/', every_product_page, name='product_detail'),
     path('comments/add/', AddingComments.as_view(), name='add-comment'),
     path('tag/<str:tag>/', tag_filter_view, name='tag_filter'),
-    path('rating/api/', RatingProducts.as_view(), name='add-rating')
+    path('rate/', RatingProducts.as_view(), name='rate-product'),
+
 
 
 ]

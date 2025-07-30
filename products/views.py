@@ -1,11 +1,13 @@
 from django.shortcuts import render , redirect , get_object_or_404
 from django.http import HttpResponse , request , response 
+from django.contrib.auth.decorators import login_required
+from django.db.models import Avg
 
 from rest_framework import generics , permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .models import Product , Comments
+from .models import Product , Comments , Ratings
 from .serialzers import CommentsSerialzer , RatingsSerialzer
 
 
@@ -46,9 +48,22 @@ def Eye_Care_page(request):
     return every_category_page(request, 'Eye Care', 'Eye-Care')
 
 
-def every_product_page(request,slug) :
-    product = get_object_or_404(Product , slug=slug)
-    return render(request, 'every_product.html' , {'product' : product})
+
+def every_product_page(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+    
+    user_rating = None
+    if request.user.is_authenticated:
+        user_rating = product.ratings.filter(user=request.user).first()
+    
+    avg_rating = product.ratings.aggregate(avg=Avg('score'))['avg'] or 0
+
+    return render(request, 'every_product.html', {
+        'product': product,
+        'user_rating': user_rating,
+        'avg_rating': round(avg_rating, 1),
+    })
+
 
 
 class AddingComments(APIView):
@@ -66,14 +81,18 @@ class AddingComments(APIView):
 class RatingProducts(APIView) :
     permission_classes = [permissions.IsAuthenticated]
 
-    def post(self, request) :
-        serializer = RatingsSerialzer(data=request.data)
-        if serializer.is_valid() :
-            rating = serializer.save(user=request.user)
-            slug = rating.product.slug
-            return redirect('product_detail', slug=slug)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request):
+        product_id = request.data.get("product")
+        score = request.data.get("score")
+        product = Product.objects.filter(id=product_id).first()
+        if not product:
+            return Response({"error": "Product not found"}, status=404)
 
+        if Ratings.objects.filter(user=request.user, product=product).exists():
+            return Response({"error": "Already rated"}, status=400)
+
+        Ratings.objects.create(user=request.user, product=product, score=score)
+        return Response({"success": True})
 
 def products_list_view(request, products, title):
     return render(request, 'products_list.html', {'products': products, 'title': title})

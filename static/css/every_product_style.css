@@ -205,3 +205,17 @@ strong {
     background-color: #be95c4;
     color: white;
 }
+
+
+.stars {
+    display: flex;
+    gap: 5px;
+    cursor: pointer;
+    font-size: 24px;
+    color: #999;
+}
+.stars .star:hover,
+.stars .star.hovered,
+.stars .star.selected {
+    color: #f5c518;
+}
