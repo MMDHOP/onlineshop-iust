@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from .models import Product , Comments
-from .serialzers import CommentsSerialzer
+from .serialzers import CommentsSerialzer , RatingsSerialzer
 
 
 # Create your views here.
@@ -62,6 +62,17 @@ class AddingComments(APIView):
             return redirect('product_detail', slug=slug)
         return redirect(request.META.get('HTTP_REFERER', '/'))
     
+
+class RatingProducts(APIView) :
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request) :
+        serializer = RatingsSerialzer(data=request.data)
+        if serializer.is_valid() :
+            rating = serializer.save(user=request.user)
+            slug = rating.product.slug
+            return redirect('product_detail', slug=slug)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 def products_list_view(request, products, title):

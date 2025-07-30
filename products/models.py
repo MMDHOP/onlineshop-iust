@@ -145,3 +145,20 @@ class Comments(models.Model) :
 
     def __str__(self):
         return f"{self.user.username} - {self.created_at}"
+
+
+
+class Ratings(models.Model) :
+
+    product = models.ForeignKey(Product,on_delete=models.CASCADE,related_name='ratings')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='ratings')
+    score = models.PositiveSmallIntegerField(
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(5)
+        ]
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.created_at}"
