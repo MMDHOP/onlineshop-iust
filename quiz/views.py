@@ -123,7 +123,6 @@ TAGS_BY_QUESTION = {
 
 
 
-
 @login_required
 def quiz_view(request):
     if request.method == 'POST':
@@ -135,17 +134,44 @@ def quiz_view(request):
                 'error': "Please answer all questions."
             })
 
+        skin_type_score = SCORE_MAP.get(answers[0], 3)  
+        if skin_type_score in [1,2]:
+            skin_type = ['dry']
+        elif skin_type_score == 3:
+            skin_type = ['combination']
+        elif skin_type_score in [4,5]:
+            skin_type = ['oily']
+        else:
+            skin_type = ['combination']
+
+
+        selected_concerns = request.POST.getlist('concerns')  
+        selected_preferences = request.POST.getlist('preferences')
+
+
+        tags = skin_type + selected_concerns + selected_preferences
+
+
+        quiz = Quiz.objects.create(
+            user_id=request.user,
+            skin_type=skin_type,
+            concern_targeted=selected_concerns,
+            preferences=selected_preferences,
+            tags=tags
+        )
+
+
         scores = [SCORE_MAP[a] for a in answers]
+
         recommendations = []
         for i, score in enumerate(scores):
             text = RECOMMENDATIONS[i][score]
-            tags = TAGS_BY_QUESTION.get(i, [])
-            # اگر لازم است فیلتر کن تگ‌های خالی را حذف کن:
-            tags = [tag for tag in tags if tag]
+            tags_for_question = TAGS_BY_QUESTION.get(i, [])
+            tags_for_question = [tag for tag in tags_for_question if tag]
             recommendations.append({
                 'question': QUESTIONS[i],
                 'text': text,
-                'tags': tags,
+                'tags': tags_for_question,
             })
 
         return render(request, 'result.html', {
@@ -156,6 +182,7 @@ def quiz_view(request):
         'questions': zip(range(10), QUESTIONS),
         'options': OPTIONS
     })
+
 
 
 

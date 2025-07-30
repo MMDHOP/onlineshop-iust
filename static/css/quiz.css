@@ -213,3 +213,18 @@ body {
 .tag-link:hover {
     background-color: #d9cbee;
 }
+
+
+
+/* در فایل quiz.css یا css مربوط به این صفحه */
+.routine-link {
+    margin-left: 15px;
+    color: #6a5d7b;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.routine-link:hover {
+    color: #bfa0d3;
+}

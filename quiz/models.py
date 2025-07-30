@@ -44,8 +44,8 @@ class Quiz(models.Model) :
 
 
     user_id = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
-    # skin_type = MultiSelectField(choices=SKIN_TYPES,blank=True)
-    # concern_targeted = MultiSelectField(choices=CONCERNS_TARGETS,blank=True)
-    # preferences = MultiSelectField(choices=PREFERENCES,blank=True)
+    skin_type = MultiSelectField(choices=SKIN_TYPES,blank=True)
+    concern_targeted = MultiSelectField(choices=CONCERNS_TARGETS,blank=True)
+    preferences = MultiSelectField(choices=PREFERENCES,blank=True)
     tags = MultiSelectField(choices=TAGS_CHOICES,blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
