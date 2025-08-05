@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Skincare Platform - Home</title>
     <link rel="stylesheet" href="{% static 'css/home_style.css' %}" />
+    <!-- <link rel="stylesheet" href="{% static 'css/product_list.css' %}" /> -->
+
 </head>
 <body>
     <!-- Navbar -->
@@ -35,9 +37,86 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        <h1>Welcome to Your Personalized Skincare Platform</h1>
-        <p>Find the best products and routines tailored to your skin.</p>
-        <a href="/products/" class="btn">Browse Products</a>
+        {% if not user.is_authenticated %}
+            <h1>Welcome to Your Personalized Skincare Platform</h1>
+            <p>Find the best products and routines tailored to your skin.</p>
+            <a href="/products/" class="btn">Browse Products</a>
+        {% else %}
+            <h1>Welcome to Your Personalized Skincare Platform</h1>
+            <p>Find the best products and routines tailored to your skin.</p>
+            <h2>🆕 Newest Products</h2>
+            <div class="products">
+                {% for product in latest_products %}
+                    <div class="product-card">
+                        <a href="{% url 'product_detail' product.slug %}">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}">
+                            {% else %}
+                                <p>No image</p>
+                            {% endif %}
+                            <p>{{ product.name }}</p>
+                            <p>IRR {{ product.price }}</p>
+                        </a>
+                    </div>
+                {% empty %}
+                    <p>No products available.</p>
+                {% endfor %}
+            </div>
+            <h2>🧬 Skin Matched Products</h2>
+            <div class="products">
+                {% for product in skin_matched_products %}
+                    <div class="product-card">
+                        <a href="{% url 'product_detail' product.slug %}">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}">
+                            {% else %}
+                                <p>No image</p>
+                            {% endif %}
+                            <p>{{ product.name }}</p>
+                            <p>IRR {{ product.price }}</p>
+                        </a>
+                    </div>
+                {% empty %}
+                    <p>No products available.</p>
+                {% endfor %}
+            </div>
+            <h2> concern Matched Products</h2>
+            <div class="products">
+                {% for product in concerns_matched_products %}
+                    <div class="product-card">
+                        <a href="{% url 'product_detail' product.slug %}">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}">
+                            {% else %}
+                                <p>No image</p>
+                            {% endif %}
+                            <p>{{ product.name }}</p>
+                            <p>IRR {{ product.price }}</p>
+                        </a>
+                    </div>
+                {% empty %}
+                    <p>No products available.</p>
+                {% endfor %}
+            </div>
+            <h2>🆕 prefernce Matched Products</h2>
+            <div class="products">
+                {% for product in preferences_matched_products %}
+                    <div class="product-card">
+                        <a href="{% url 'product_detail' product.slug %}">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}">
+                            {% else %}
+                                <p>No image</p>
+                            {% endif %}
+                            <p>{{ product.name }}</p>
+                            <p>IRR {{ product.price }}</p>
+                        </a>
+                    </div>
+                {% empty %}
+                    <p>No products available.</p>
+                {% endfor %}
+            </div>
+        {% endif %}
     </main>
 
     <footer class="footer">

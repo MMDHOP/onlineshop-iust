@@ -38,7 +38,13 @@
                 <p><strong>Full Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
                 <p><strong>Email:</strong> {{ user.email }}</p>
                 <p><strong>User Type:</strong> {{ user.user_type }}</p>
-                <p><strong>skin type:</strong>{{ user.skin_type }}</p>
+                <p><strong>Device Type:</strong> {{ user.device_type }}</p>
+                <p><strong>skin type:</strong></p>
+                    {% for s in user.skin_type %}
+                        <li>{{ s }}</li>
+                    {% empty %}
+                        <li>Nothing selected</li>
+                    {% endfor %}
                 <p><strong>Concerns:</strong></p>
                     {% for c in user.concern %}
                         <li>{{ c }}</li>
@@ -55,7 +61,7 @@
         </div>
         <a href="{% url 'cart-detail' %}" class="btn">Your Cart🛒</a>
 
-        <a href="/home/" class="btn">Back to Home🏡</a>
+        <a href="{% url 'home' %}" class="btn">Back to Home🏡</a>
 
         <a href="{% url 'edit_profile' %}" class="btn">Edit Profile✏️</a>
         

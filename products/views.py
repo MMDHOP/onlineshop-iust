@@ -2,10 +2,14 @@ from django.shortcuts import render , redirect , get_object_or_404
 from django.http import HttpResponse , request , response 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg
+from django.db.models import Q
 
 from rest_framework import generics , permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+
+from functools import reduce
+from operator import or_
 
 from .models import Product , Comments , Ratings
 from .serialzers import CommentsSerialzer , RatingsSerialzer
@@ -94,9 +98,13 @@ class RatingProducts(APIView) :
         Ratings.objects.create(user=request.user, product=product, score=score)
         return Response({"success": True})
 
-def products_list_view(request, products, title):
-    return render(request, 'products_list.html', {'products': products, 'title': title})
-
+def products_list_view(request, products, title=None, html=None):
+    context = {'products': products, 'title': title}
+    if html:
+        if html == 'home.html':
+            context = {'latest_products': products}
+        return render(request, html, context)
+    return render(request, 'products_list.html', context)
 
 
 def tag_filter_view(request, tag):
@@ -122,3 +130,39 @@ def tag_filter_view(request, tag):
 
     return products_list_view(request, products, title=f"Tag: {tag}")
 
+
+
+
+def homepage(request):
+    latest_products = Product.objects.order_by('-created_at')[:5]
+    skin_matched_products = []
+    concerns_matched_products = []
+    preferences_matched_products = []
+
+    if request.user.is_authenticated:
+        user_skin_types = request.user.skin_type or []
+        user_concerns = request.user.concern or []
+        user_preferences = request.user.preferences or []
+
+        if user_skin_types:
+            skin_query = reduce(or_, (Q(skin_type__icontains=skin) for skin in user_skin_types))
+            skin_matched_products = Product.objects.filter(skin_query).distinct()[:5]
+
+        if user_concerns:
+            print("User concerns:", user_concerns)
+            concern_query = reduce(or_, (Q(concern_targeted__icontains=c) for c in user_concerns))
+            concerns_matched_products = Product.objects.filter(concern_query).distinct()[:5]
+            print("Matched concerns:", concerns_matched_products)
+
+
+        if user_preferences:
+            preference_query = reduce(or_, (Q(preferences__icontains=p) for p in user_preferences))
+            preferences_matched_products = Product.objects.filter(preference_query).distinct()[:5]
+
+    context = {
+        'latest_products': latest_products,
+        'skin_matched_products': skin_matched_products,
+        'concerns_matched_products': concerns_matched_products,
+        'preferences_matched_products': preferences_matched_products,
+    }
+    return render(request, 'home.html', context)

@@ -19,16 +19,19 @@ from django.urls import path , include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from onlineshop.view import homepage
+# from onlineshop.view import homepage
+from products.views import homepage
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/',homepage, name='home'),
+    path('',homepage, name='home'),
     path('',include('users.urls')),
     path('',include('products.urls')),
     path('',include('quiz.urls')),
     path('',include('carts.urls')),
     path('', include('routins.urls')),
+    # path('',latest_products,name='home'),
+
 
 ]
 
