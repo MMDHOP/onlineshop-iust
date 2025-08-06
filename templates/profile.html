@@ -16,6 +16,7 @@
         <nav class="nav-links">
             <a href="/category/">Categories</a>
             <a href="/quiz/">Quiz</a>
+            <a href="{% url 'routine' %}" class="routine-link">My Routine</a>
             <a href="{% url 'profile' %}" class="profile-link">
                 <!-- <img src="{% if user.profile_image %}{{ user.profile_image.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" alt="Profile" class="profile-pic" style="width: 30px; height: 30px;" /> -->
                 {{ user.username }}

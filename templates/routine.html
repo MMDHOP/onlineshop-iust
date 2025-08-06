@@ -30,20 +30,30 @@
         <h1 style="text-align: center; color: #6a5d7b; margin-bottom: 30px;">Your Personalized Skincare Routine</h1>
 
         {% if routine %}
-            <pre>{{ routine }}</pre>
-            <pre>{{ routine.steps }}</pre>
-            {% for step in routine.steps %}
+            <!-- <p>Routine: {{ routine.plan_name }} for {{ routine.user }}</p> -->
+
+            {% for step in detailed_steps %}
                 <div class="profile-card">
                     <div class="profile-info">
                         <p><strong>Step: {{ step.step_name }}</strong></p>
-                        <p>Product ID: {{ step.product_id }}</p>
-                        {# می‌تونی اینجا لینک محصول یا اطلاعات بیشتر اضافه کنی #}
+                        
+                        {% if step.product %}
+                            <p>Product: <a href="{% url 'product_detail' step.product.slug %}">{{ step.product.name }}</a></p>
+                            {% if step.product.description %}
+                                <p>Description: {{ step.product.description }}</p>
+                            {% else %}
+                                <p>Description: Nothing</p>
+                            {% endif %}
+                        {% else %}
+                            <p style="color: gray;">No recommendation found for this step.</p>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}
         {% else %}
             <p style="text-align: center; color: #6a5d7b;">You don't have any routine yet.</p>
         {% endif %}
+
     </div>
 </body>
 </html>

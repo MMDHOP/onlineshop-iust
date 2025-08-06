@@ -92,6 +92,7 @@ body {
     overflow-y: hidden;
     padding: 20px;
     scroll-behavior: smooth;
+    margin-top: 50px;
 }
 
 .product-card {
