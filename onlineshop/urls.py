@@ -18,13 +18,15 @@ from django.contrib import admin
 from django.urls import path , include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import RedirectView
 
 # from onlineshop.view import homepage
 from products.views import homepage
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',homepage, name='home'),
+    path('', RedirectView.as_view(pattern_name='home', permanent=False)),
+    path('home/',homepage, name='home'),
     path('',include('users.urls')),
     path('',include('products.urls')),
     path('',include('quiz.urls')),

@@ -13,6 +13,7 @@ from operator import or_
 
 from .models import Product , Comments , Ratings
 from .serialzers import CommentsSerialzer , RatingsSerialzer
+from browsing_history.views import BrowsingHistory
 
 
 # Create your views here.
@@ -55,7 +56,13 @@ def Eye_Care_page(request):
 
 def every_product_page(request, slug):
     product = get_object_or_404(Product, slug=slug)
-    
+
+    if request.user.is_authenticated:
+        BrowsingHistory.objects.create(
+            user=request.user,
+            product=product,
+            interaction_type='view'
+        )
     user_rating = None
     if request.user.is_authenticated:
         user_rating = product.ratings.filter(user=request.user).first()
@@ -82,7 +89,8 @@ class AddingComments(APIView):
         return redirect(request.META.get('HTTP_REFERER', '/'))
     
 
-class RatingProducts(APIView) :
+
+class RatingProducts(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
@@ -96,7 +104,19 @@ class RatingProducts(APIView) :
             return Response({"error": "Already rated"}, status=400)
 
         Ratings.objects.create(user=request.user, product=product, score=score)
+
+        BrowsingHistory.objects.create(
+            user=request.user,
+            product=product,
+            interaction_type='rating'
+        )
+
+        if int(score) > 3:
+            BrowsingHistory.objects.get_or_create(user=request.user, product=product, interaction_type='like')
+            BrowsingHistory.objects.get_or_create(user=request.user, product=product, interaction_type='wishlist')
+
         return Response({"success": True})
+
 
 def products_list_view(request, products, title=None, html=None):
     context = {'products': products, 'title': title}

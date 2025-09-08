@@ -1,47 +1,51 @@
-from django.shortcuts import get_object_or_404 
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.contrib import messages
+from collections import defaultdict
 
-from products.models import Product, Rating
+from products.models import Product, Ratings
 from .models import BrowsingHistory
+
 
 @login_required
 def product_interaction(request, product_id):
-    """
-    ثبت تعامل کاربر با محصول:
-    view, cart, wishlist, like, rating
-    """
     product = get_object_or_404(Product, id=product_id)
-    action = request.POST.get('action')  # view, cart, wishlist, like, rating
 
-    # ثبت interaction تو BrowsingHistory
-    BrowsingHistory.objects.create(
+
+    BrowsingHistory.objects.get_or_create(
         user=request.user,
         product=product,
-        interaction_type=action
+        interaction_type="view"
     )
 
-    # اگر action ریتینگ بود، مقدار ریتینگ رو هم از فرم بگیر و تو مدل Rating ذخیره کن
-    if action == "rating":
-        rating_value = int(request.POST.get('rating', 0))
-        # ثبت یا آپدیت ریتینگ
-        Rating.objects.update_or_create(
-            user=request.user,
-            product=product,
-            defaults={'value': rating_value}
-        )
 
-        # اگر ریتینگ بالای 3 بود → Like و Wishlist هم ثبت کن
-        if rating_value > 3:
-            BrowsingHistory.objects.get_or_create(
-                user=request.user,
-                product=product,
-                interaction_type="like"
-            )
-            BrowsingHistory.objects.get_or_create(
-                user=request.user,
-                product=product,
-                interaction_type="wishlist"
-            )
+    all_histories = BrowsingHistory.objects.filter(user=request.user).order_by('-timestamp')
+    product_histories = defaultdict(list)
+    for h in all_histories:
+        if h.interaction_type not in product_histories[h.product]:
+            product_histories[h.product].append(h.interaction_type)
 
-    return JsonResponse({'status': 'success'})
+    return render(request, 'browsing_history.html', {
+        'product_histories': dict(product_histories)
+    })
+
+@login_required
+def browsing_history_view(request):
+    all_histories = BrowsingHistory.objects.filter(user=request.user).order_by('-timestamp')
+    
+    product_histories = defaultdict(list)
+    for h in all_histories:
+        if h.interaction_type not in product_histories[h.product]:
+            product_histories[h.product].append(h.interaction_type)
+    
+    return render(request, 'browsing_history.html', {
+        'product_histories': dict(product_histories)
+    })
+
+
+@login_required
+def clear_browsing_history(request):
+    if request.method == "POST":
+        BrowsingHistory.objects.filter(user=request.user).delete()
+        messages.success(request, "Browsing history cleared!")
+    return redirect('browsing_history')

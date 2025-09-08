@@ -9,6 +9,8 @@ from rest_framework.response import Response
 
 from .models import Cart , CartItem
 from .serialzers import CartItemSerializer , CartSerialazer
+from browsing_history.models import BrowsingHistory
+
 
 
 
@@ -16,18 +18,22 @@ class CartApiView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        print("Request data:", request.data)
         user = request.user
         cart, created = Cart.objects.get_or_create(user=user)
 
         serializer = CartItemSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(cart=cart)
+            item = serializer.save(cart=cart)
+
+            BrowsingHistory.objects.create(
+                user=user,
+                product=item.product,
+                interaction_type='cart'
+            )
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            print('CartItemSerializer errors:', serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 @login_required
