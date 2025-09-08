@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browsing History</title>
+    <link rel="stylesheet" href="{% static 'css/browsing_history_style.css' %}">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo"><a href="/">MyShop</a></div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/profile">Profile</a>
+            <a href="/products">Products</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1>Browsing History</h1>
+        <div class="history-list">
+            {% for history in histories %}
+            <div class="history-card">
+                <img src="{{ history.product.image.url }}" alt="{{ history.product.name }}">
+                <h3>{{ history.product.name }}</h3>
+                <p class="interaction">{{ history.interaction_type|capfirst }}</p>
+                <p>{{ history.timestamp }}</p>
+            </div>
+            {% empty %}
+            <p>No browsing history yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        &copy; 2025 MyShop. All rights reserved.
+    </div>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browsing History</title>
+    <link rel="stylesheet" href="{% static 'css/browsing_history.css' %}">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo"><a href="/">MyShop</a></div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/profile">Profile</a>
+            <a href="/products">Products</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1>Browsing History</h1>
+        <div class="history-list">
+            {% for history in histories %}
+            <div class="history-card">
+                <img src="{{ history.product.image.url }}" alt="{{ history.product.name }}">
+                <h3>{{ history.product.name }}</h3>
+                <p class="interaction">{{ history.interaction_type|capfirst }}</p>
+                <p>{{ history.timestamp }}</p>
+            </div>
+            {% empty %}
+            <p>No browsing history yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        &copy; 2025 MyShop. All rights reserved.
+    </div>
+
+</body>
+</html>

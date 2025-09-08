@@ -1,0 +1,206 @@
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fdf6f0;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffe0e9;
+    padding: 15px 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.logo a {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #5c5470;
+    text-decoration: none;
+}
+.nav-links a {
+    margin: 0 15px;
+    color: #5c5470;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+.nav-links a:hover {
+    color: #9f86c0;
+}
+
+/* Main Content */
+.main-content {
+    text-align: center;
+    margin: 50px auto;
+    max-width: 900px;
+}
+.main-content h1 {
+    font-size: 2rem;
+    color: #5c5470;
+    margin-bottom: 20px;
+}
+
+/* History Cards */
+.history-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+}
+.history-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    width: 250px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.history-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+.history-card img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+.history-card h3 {
+    font-size: 1.2rem;
+    color: #5c5470;
+    margin-bottom: 10px;
+}
+.history-card p {
+    font-size: 0.95rem;
+    color: #777;
+    margin-bottom: 5px;
+}
+.history-card .interaction {
+    font-weight: 600;
+    color: #be95c4;
+}
+
+/* Footer */
+.footer {
+    background-color: #ffe0e9; 
+    color: #5c5470;
+    text-align: center;
+    padding: 20px 10px;
+    border-top: 1px solid #ddd;
+    margin-top: 50px;
+}
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fdf6f0;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffe0e9;
+    padding: 15px 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.logo a {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #5c5470;
+    text-decoration: none;
+}
+.nav-links a {
+    margin: 0 15px;
+    color: #5c5470;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+.nav-links a:hover {
+    color: #9f86c0;
+}
+
+/* Main Content */
+.main-content {
+    text-align: center;
+    margin: 50px auto;
+    max-width: 900px;
+}
+.main-content h1 {
+    font-size: 2rem;
+    color: #5c5470;
+    margin-bottom: 20px;
+}
+
+/* History Cards */
+.history-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+}
+.history-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    width: 250px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.history-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+.history-card img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+.history-card h3 {
+    font-size: 1.2rem;
+    color: #5c5470;
+    margin-bottom: 10px;
+}
+.history-card p {
+    font-size: 0.95rem;
+    color: #777;
+    margin-bottom: 5px;
+}
+.history-card .interaction {
+    font-weight: 600;
+    color: #be95c4;
+}
+
+/* Footer */
+.footer {
+    background-color: #ffe0e9; 
+    color: #5c5470;
+    text-align: center;
+    padding: 20px 10px;
+    border-top: 1px solid #ddd;
+    margin-top: 50px;
+}

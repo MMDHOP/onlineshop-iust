@@ -30,6 +30,7 @@ urlpatterns = [
     path('',include('quiz.urls')),
     path('',include('carts.urls')),
     path('', include('routins.urls')),
+    path('',include('browsing_history.urls'))
     # path('',latest_products,name='home'),
 
 
