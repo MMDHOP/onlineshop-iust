@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'quiz',
     'carts',
     'routins',
+    'browsing_history',
     'rest_framework.authtoken',
 ]
 
