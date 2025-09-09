@@ -186,3 +186,27 @@ def homepage(request):
         'preferences_matched_products': preferences_matched_products,
     }
     return render(request, 'home.html', context)
+
+
+
+
+
+def search_products(request):
+    query = request.GET.get('q', '').lower().strip()
+    keywords = query.split()  # جدا کردن جمله به کلمات
+
+    if not keywords:
+        return render(request, 'search_results.html', {'results': [], 'query': query})
+
+    q_objects = Q()  # جمع کردن شرایط
+    for word in keywords:
+        q_objects |= Q(name__icontains=word)
+        q_objects |= Q(description__icontains=word)
+        q_objects |= Q(skin_type__icontains=word)
+        q_objects |= Q(concern_targeted__icontains=word)
+        q_objects |= Q(preferences__icontains=word)  # اگه preferences هم داری
+
+    results = Product.objects.filter(q_objects).distinct()
+
+    return render(request, 'search_results.html', {'results': results, 'query': query})
+

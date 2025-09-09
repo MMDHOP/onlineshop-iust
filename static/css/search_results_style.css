@@ -1,0 +1,21 @@
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 0;
+    overflow-x: auto;
+}
+
+.tag {
+    background-color: #9f86c0;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.tag:hover {
+    background-color: #be95c4;
+}

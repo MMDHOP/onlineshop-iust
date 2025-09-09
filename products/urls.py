@@ -15,7 +15,7 @@ urlpatterns = [
     path('comments/add/', AddingComments.as_view(), name='add-comment'),
     path('tag/<str:tag>/', tag_filter_view, name='tag_filter'),
     path('rate/', RatingProducts.as_view(), name='rate-product'),
-
+    path('search/', search_products, name='search'),
 
 
 ]
