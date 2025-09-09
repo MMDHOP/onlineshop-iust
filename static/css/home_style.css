@@ -110,10 +110,20 @@ body {
 
 .products-scroll {
     display: flex;
+    flex-direction: row-reverse; /* کارت‌ها از راست به چپ */
     gap: 20px;
-    overflow-x: auto;    /* افقی کردن اسکرول */
+    overflow-x: auto;
     scroll-behavior: smooth;
-    padding: 10px 0;
+    padding: 10px 20px;
+}
+
+.product-card {
+    flex: 0 0 200px; /* عرض ثابت کارت */
+    min-width: 200px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
 }
 
 .products-scroll::-webkit-scrollbar {
@@ -125,15 +135,7 @@ body {
     border-radius: 10px;
 }
 
-.product-card {
-    flex: 0 0 auto;     /* مهم: اجازه نده کارت کوچک شود */
-    min-width: 200px;   /* عرض ثابت */
-    background: #fff;
-    border-radius: 10px;
-    padding: 10px;
-    text-align: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
+
 
 .product-card img {
     width: 150px;
@@ -143,12 +145,10 @@ body {
     margin-bottom: 8px;
 }
 
-
 .product-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
-
 
 .product-card p {
     margin: 5px 0;
@@ -162,7 +162,7 @@ body {
 
 @media (max-width: 768px) {
     .product-card {
-        width: 160px;
+        min-width: 140px;
     }
     .product-card img {
         width: 100px;
