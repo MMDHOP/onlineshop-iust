@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>Your Skincare Routine</title>
-    <link rel="stylesheet" href="{% static 'css/quiz.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/routine.css' %}" />
 </head>
 <body>
     <header class="navbar">
@@ -27,33 +27,86 @@
     </header>
 
     <div class="profile-content">
-        <h1 style="text-align: center; color: #6a5d7b; margin-bottom: 30px;">Your Personalized Skincare Routine</h1>
+        <h1 class="main-title">Your Personalized Skincare Routine</h1>
 
-        {% if routine %}
-            <!-- <p>Routine: {{ routine.plan_name }} for {{ routine.user }}</p> -->
-
-            {% for step in detailed_steps %}
-                <div class="profile-card">
-                    <div class="profile-info">
-                        <p><strong>Step: {{ step.step_name }}</strong></p>
-                        
-                        {% if step.product %}
-                            <p>Product: <a href="{% url 'product_detail' step.product.slug %}">{{ step.product.name }}</a></p>
-                            {% if step.product.description %}
-                                <p>Description: {{ step.product.description }}</p>
-                            {% else %}
-                                <p>Description: Nothing</p>
-                            {% endif %}
-                        {% else %}
-                            <p style="color: gray;">No recommendation found for this step.</p>
-                        {% endif %}
-                    </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p style="text-align: center; color: #6a5d7b;">You don't have any routine yet.</p>
+        {% if seasonal_info %}
+        <div class="seasonal-tips">
+            <div class="seasonal-header">
+                <span class="season-icon">{{ seasonal_info.icon }}</span>
+                <h3 class="seasonal-title">{{ seasonal_info.title }}</h3>
+            </div>
+            
+            <p class="seasonal-message">{{ seasonal_info.message }}</p>
+            
+            {% if seasonal_info.tips %}
+            <div class="tips-section">
+                <h4 class="tips-heading">Essential Tips for This Season:</h4>
+                <ul class="tips-list">
+                    {% for tip in seasonal_info.tips %}
+                    <li class="tip-item">{{ tip }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
         {% endif %}
 
+        <div class="routine-section">
+            {% if routine %}
+                <div class="routine-header">
+                    <h2 class="routine-title">Your Current Routine</h2>
+                    <p class="routine-subtitle">Follow these steps for optimal skincare results</p>
+                </div>
+
+                <div class="routine-steps">
+                    {% for step in detailed_steps %}
+                        <div class="routine-step">
+                            <div class="step-header">
+                                <span class="step-number">{{ forloop.counter }}</span>
+                                <h4 class="step-name">{{ step.step_name }}</h4>
+                            </div>
+                            
+                            {% if step.product %}
+                                <div class="product-info">
+                                    <h5 class="product-name">
+                                        <a href="{% url 'product_detail' step.product.slug %}" class="product-link">
+                                            {{ step.product.name }}
+                                        </a>
+                                    </h5>
+                                    {% if step.product.description %}
+                                        <p class="product-description">{{ step.product.description }}</p>
+                                    {% else %}
+                                        <p class="no-description">No description available</p>
+                                    {% endif %}
+                                </div>
+                            {% else %}
+                                <div class="no-product">
+                                    <p class="no-product-text">No product recommendation for this step yet.</p>
+                                    <a href="/quiz/" class="retake-quiz-btn">Retake Quiz</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="no-routine">
+                    <div class="no-routine-content">
+                        <h3 class="no-routine-title">No Routine Found</h3>
+                        <p class="no-routine-text">You haven't created a skincare routine yet. Take our personalized quiz to get started!</p>
+                        <a href="/quiz/" class="create-routine-btn">Create Your Routine</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-links">
+            <a href="/home/">Home</a>
+            <a href="/category/">Categories</a>
+            <a href="/quiz/">Skincare Quiz</a>
+        </div>
+        <p>&copy; 2024 Skincare. All rights reserved.</p>
     </div>
 </body>
 </html>

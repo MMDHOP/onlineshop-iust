@@ -10,7 +10,6 @@ from .models import Quiz
 from products.models import Product
 from routins.views import generate_routine_from_quiz
 
-# Create your views here.
 
 
 QUESTIONS = [
@@ -153,7 +152,6 @@ def quiz_view(request):
         tags = skin_type + selected_concerns + selected_preferences
 
 
-# بعد از ساخت quiz
         quiz = Quiz.objects.create(
             user_id=request.user,
             skin_type=skin_type,
@@ -162,7 +160,6 @@ def quiz_view(request):
             tags=tags
         )
 
-        # اضافه کن این خط:
         generate_routine_from_quiz(request.user, {
             'skin_type': skin_type,
             'concerns': selected_concerns,

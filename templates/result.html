@@ -15,7 +15,6 @@
             <a href="/category/">Categories</a>
             <a href="/quiz/">Quiz</a>
             <a href="{% url 'routine' %}" class="routine-link">My Routine</a>
-            <!-- لینک جدید کنار Quiz -->
             
             {% if user.is_authenticated %}
             <a href="{% url 'profile' %}">Profile</a>
