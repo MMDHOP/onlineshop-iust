@@ -16,7 +16,6 @@ class UserImageForm(forms.ModelForm):
 
 
 
-User = get_user_model()
 
 class ProfileEditForm(forms.ModelForm):
     class Meta:
