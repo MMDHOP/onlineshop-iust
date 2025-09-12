@@ -1,60 +1,81 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Skincare Platform - Home</title>
+    <title>Skincare Platform - Search</title>
     <link rel="stylesheet" href="{% static 'css/product_list.css' %}" />
-
 </head> 
-    <header class="navbar">
-        <div class="logo">
-            <a href="/home/">🌿 Skincare</a>
-        </div>
-        <nav class="nav-links">
-            <a href="/category/">Categories</a>
-            <a href="/quiz/">Quiz</a>
-            <a href="{% url 'routine' %}">My Routine</a>
-            {% if user.is_authenticated %}
-                <a href="{% url 'profile' %}">Profile</a>
-                <a href="{% url 'logout' %}">Logout</a>
-            {% else %}
-                <a href="{% url 'login' %}">Login</a>
-                <a href="{% url 'sign_up' %}">Register</a>
-            {% endif %}
-        </nav>
-        <div class="search-bar">
-            <form action="/search/" method="get">
-                <input type="text" name="q" placeholder="Search products..." />
-                <button type="submit">🔍</button>
-            </form>
-        </div>
-    </header>
-<main class="main-content"><h1>Search results for "{{ query }}"</h1>
-{% if results %}
-    <div class="products">
-    {% for product in results %}
-        <div class="product-card">
-            <a href="{% url 'product_detail' product.slug %}">
-                {% if product.image %}<img src="{{ product.image.url }}">{% else %}<p>No image</p>{% endif %}
-                <p>{{ product.name }}</p>
-                <p>IRR {{ product.price }}</p>
-            </a>
-        </div>
-    {% endfor %}
+
+<header class="navbar">
+    <div class="logo">
+        <a href="/home/">🌿 Skincare</a>
     </div>
-{% else %}
-    <p>No products found.</p>
-{% endif %}
+    <nav class="nav-links">
+        <a href="/category/">Categories</a>
+        <a href="/quiz/">Quiz</a>
+        <a href="{% url 'routine' %}">My Routine</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'profile' %}">Profile</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'sign_up' %}">Register</a>
+        {% endif %}
+    </nav>
+    <div class="search-bar">
+        <form action="/search/" method="get">
+            <input type="text" name="q" placeholder="Search products..." value="{{ query }}" />
+            <button type="submit">🔍</button>
+        </form>
+    </div>
+</header>
+
+<main class="main-content">
+    <h1>Search results for "{{ query }}"</h1>
+
+    {% if results %}
+        <div class="products">
+        {% for product in results %}
+            <div class="product-card">
+                <a href="{% url 'product_detail' product.slug %}">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% else %}
+                        <p>No image</p>
+                    {% endif %}
+                    <p><strong>{{ product.name }}</strong></p>
+                    <p>IRR {{ product.price }}</p>
+                    <p>Rating: {{ product.avg_rating|floatformat:1 }} / 5 ⭐</p>
+                </a>
+
+                <!-- تگ‌ها -->
+                <div class="tags-container">
+                    {% for tag in product.skin_type.all %}
+                        <span class="tag">{{ tag }}</span>
+                    {% endfor %}
+                    {% for tag in product.concern_targeted.all %}
+                        <span class="tag">{{ tag }}</span>
+                    {% endfor %}
+                    {% for tag in product.preferences.all %}
+                        <span class="tag">{{ tag }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+        <p>No products found.</p>
+    {% endif %}
 </main>
 
-
 <footer class="footer">
-        <p>&copy; 2025 Skincare Platform. All rights reserved.</p>
-        <nav class="footer-links">
-            <a href="/about/">About Us</a>
-            <a href="/contact/">Contact</a>
-            <a href="/privacy/">Privacy Policy</a>
-        </nav>
-    </footer>
+    <p>&copy; 2025 Skincare Platform. All rights reserved.</p>
+    <nav class="footer-links">
+        <a href="/about/">About Us</a>
+        <a href="/contact/">Contact</a>
+        <a href="/privacy/">Privacy Policy</a>
+    </nav>
+</footer>

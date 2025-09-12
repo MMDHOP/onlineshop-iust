@@ -1,8 +1,8 @@
 from django.shortcuts import render , redirect , get_object_or_404
 from django.http import HttpResponse , request , response 
 from django.contrib.auth.decorators import login_required
-from django.db.models import Avg
-from django.db.models import Q
+from django.db.models import Avg, Value , Q , Count ,FloatField
+from django.db.models.functions import Coalesce
 
 from rest_framework import generics , permissions, status
 from rest_framework.views import APIView
@@ -190,23 +190,66 @@ def homepage(request):
 
 
 
-
 def search_products(request):
     query = request.GET.get('q', '').lower().strip()
-    keywords = query.split()  # جدا کردن جمله به کلمات
+    keywords = query.split()
 
-    if not keywords:
-        return render(request, 'search_results.html', {'results': [], 'query': query})
+    user = request.user if request.user.is_authenticated else None
 
-    q_objects = Q()  # جمع کردن شرایط
-    for word in keywords:
-        q_objects |= Q(name__icontains=word)
-        q_objects |= Q(description__icontains=word)
-        q_objects |= Q(skin_type__icontains=word)
-        q_objects |= Q(concern_targeted__icontains=word)
-        q_objects |= Q(preferences__icontains=word)  # اگه preferences هم داری
+    products = Product.objects.all()
 
-    results = Product.objects.filter(q_objects).distinct()
+    if user:
+        user_filters = Q()
 
-    return render(request, 'search_results.html', {'results': results, 'query': query})
+        if user.skin_type:
+            for st in user.skin_type:
+                user_filters |= Q(skin_type__icontains=st)
 
+        if user.concern:
+            for c in user.concern:
+                user_filters |= Q(concern_targeted__icontains=c)
+
+        if user.preferences:
+            for p in user.preferences:
+                user_filters |= Q(preferences__icontains=p)
+
+        if user_filters:
+            products = products.filter(user_filters)
+
+
+    if keywords:
+        q_objects = Q()
+        for word in keywords:
+            q_objects |= (
+                Q(name__icontains=word) |
+                Q(description__icontains=word) |
+                Q(skin_type__icontains=word) |
+                Q(concern_targeted__icontains=word) |
+                Q(preferences__icontains=word)
+            )
+        products = products.filter(q_objects)
+
+
+    POSITIVE_KEYWORDS = [
+    'عالی', 'خوب', 'محشر', 'فوق‌العاده', 'بی‌نظیر', 'عالیه', 'زیبا', 'خوشمزه', 'مناسب', 'با کیفیت', 'عالی‌ترین',
+    'good', 'excellent', 'love', 'amazing', 'high quality', 'best', 'awesome', 'perfect', 'fantastic', 'great'              
+    ]
+
+    products = products.annotate(num_comments=Count('comments'))
+
+    comment_q = Q()
+    for word in POSITIVE_KEYWORDS:
+        comment_q |= Q(comments__text__icontains=word)
+
+    products = products.filter(comment_q | Q(num_comments=0)).distinct()
+
+
+    products = products.annotate(
+        avg_rating=Coalesce(
+            Avg('ratings__score'),
+            Value(1, output_field=FloatField()) 
+        )
+    ).order_by('-avg_rating', 'created_at')
+
+
+    return render(request, "search_results.html", {"results": products, "query": query})
