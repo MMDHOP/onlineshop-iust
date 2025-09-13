@@ -45,20 +45,22 @@
             <button type="submit" class="btn btn-danger">Clear history</button>
         </form>
     {% endif %}
-
     <div class="history-list">
-        {% for product, interactions in product_histories.items %}
+        {% for item in histories_with_time %}
         <div class="history-card">
-            {% if product.image %}
-                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% if item.product.image %}
+                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
             {% else %}
                 <img src="{% static 'images/no-image.png' %}" alt="No Image">
             {% endif %}
-            <h3><a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a></h3>
+            <h3><a href="{% url 'product_detail' item.product.slug %}">{{ item.product.name }}</a></h3>
             <p class="interaction">
-                {% for i in interactions %}
+                {% for i in item.interactions %}
                     {{ i|capfirst }}{% if not forloop.last %}, {% endif %}
                 {% endfor %}
+            </p>
+            <p class="timestamp">
+                {{ item.last_view|date:"Y-m-d H:i" }}
             </p>
         </div>
         {% empty %}
